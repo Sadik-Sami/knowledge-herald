@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--radius: 0.5rem;
+	}
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground font-body;
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply font-heading;
+	}
+}
+@layer utilities {
+	.glass-effect {
+		@apply bg-background/80 backdrop-blur-md border-border/50;
+	}
+}
