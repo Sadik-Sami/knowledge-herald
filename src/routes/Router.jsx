@@ -1,3 +1,4 @@
+import AdminLayout from '@/layout/AdminLayout';
 import UserLayout from '@/layout/UserLayout';
 import Home from '@/pages/Home';
 import { createBrowserRouter } from 'react-router-dom';
@@ -14,15 +15,12 @@ export const router = createBrowserRouter([
 			},
 		],
 	},
-	// {
-	// 	path: '/dashboard',
-	// 	element: <></>,
-	// 	errorElement: <></>,
-	// 	children: [
-	// 		{
-	// 			path: '/dashboard',
-	// 			element: <></>,
-	// 		},
-	// 	],
-	// },
+	{
+		path: '/dashboard',
+		element: <AdminLayout />,
+		errorElement: <></>,
+		children: [
+			
+		],
+	},
 ]);
