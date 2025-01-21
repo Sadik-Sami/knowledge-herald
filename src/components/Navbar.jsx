@@ -136,7 +136,7 @@ const Navbar = () => {
 							</Button>
 						</div>
 						<nav className='p-4'>
-							<div className='grid gap-2'>
+							<div className='grid gap-2 bg-background/95 backdrop-blur-3xl: rounded-md'>
 								{filteredItems.map((item) => {
 									const isActive = location.pathname === item.href;
 									return (
@@ -168,9 +168,9 @@ const Navbar = () => {
 								)}
 							</div>
 							<div className='mt-6 flex items-center justify-between'>
-								<ThemeToggle />
+								<ThemeToggle className={'bg-secondary'} />
 								{user && (
-									<Button variant='ghost' onClick={signOut}>
+									<Button variant='outline' onClick={signOut}>
 										Log out
 									</Button>
 								)}

@@ -11,6 +11,7 @@ import useImageUpload from '@/hooks/use-image-upload';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import useAuth from '@/hooks/use-AuthContext';
+import useAxiosPublic from '@/hooks/use-AxiosPublic';
 
 const PasswordStrengthBar = ({ password = '' }) => {
 	const getStrength = () => {
@@ -50,16 +51,17 @@ const RegisterForm = () => {
 	const [avatarPreview, setAvatarPreview] = useState(null);
 	const fileInputRef = useRef(null);
 
-	const { signUp, googleLogin, updateUserProfile, loading } = useAuth();
+	const { signUp, googleLogin, updateUserProfile, loading, user } = useAuth();
 	const { uploadImage, uploading } = useImageUpload();
 	const { addToast } = useToast();
-
+	const axiosPublic = useAxiosPublic();
 	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors },
 		setError,
+		setValue,
 	} = useForm({
 		defaultValues: {
 			name: '',
@@ -85,9 +87,12 @@ const RegisterForm = () => {
 			}
 			const reader = new FileReader();
 			reader.onloadend = () => {
-				setAvatarPreview(reader.result);
+				setAvatarPreview(reader.result); // Update preview
 			};
 			reader.readAsDataURL(file);
+
+			// Update the form's state for the avatar field
+			setValue('avatar', file, { shouldValidate: true });
 		}
 	};
 
@@ -105,11 +110,22 @@ const RegisterForm = () => {
 			if (data.avatar) {
 				imageUrl = await uploadImage(data.avatar);
 			}
-
-			const userCredential = await signUp(data.email, data.password);
-			await updateUserProfile(data.name, imageUrl);
-
-			addToast('Account created successfully!', 'success');
+			const result = await signUp(data.email, data.password);
+			if (result.user) {
+				await updateUserProfile(data.name, imageUrl);
+				const userInfo = {
+					name: data.name,
+					email: data.email,
+					photo: imageUrl,
+				};
+				const response = await axiosPublic.post('/users', userInfo);
+				if (!response.data.success) {
+					console.error('failed to add user', response.data?.message);
+				} else {
+					console.error('User added successfully', response.data?.message);
+				}
+			}
+			addToast(`Welcome to KnowledgeHerald ${user ? user.displayName : ''}`, 'success');
 		} catch (error) {
 			addToast(error.message, 'error');
 		}
@@ -117,8 +133,22 @@ const RegisterForm = () => {
 
 	const handleGoogleLogin = async () => {
 		try {
-			await googleLogin();
-			addToast('Signed in with Google successfully!', 'success');
+			const result = await googleLogin();
+			const { displayName, email, photoURL } = result.user;
+
+			const userInfo = {
+				name: displayName,
+				email: email,
+				photo: photoURL,
+			};
+
+			const response = await axiosPublic.post('/users', userInfo);
+			if (response.data.success) {
+				console.log(response.data.message);
+			} else {
+				return console.log(response.data.message);
+			}
+			addToast(`Welcome to KnowledgeHerald ${user ? user.displayName : ''}`, 'success');
 		} catch (error) {
 			addToast(error.message, 'error');
 		}
@@ -152,11 +182,11 @@ const RegisterForm = () => {
 						type='file'
 						accept='image/*'
 						className='hidden'
-						ref={fileInputRef}
-						onChange={(e) => {
-							handleImageChange(e);
-							register('avatar').onChange(e); // This ensures react-hook-form gets the file
+						ref={(e) => {
+							fileInputRef.current = e;
+							register('avatar').ref(e); // Ensure react-hook-form manages this input
 						}}
+						onChange={handleImageChange} // Attach your custom handler
 					/>
 				</div>
 

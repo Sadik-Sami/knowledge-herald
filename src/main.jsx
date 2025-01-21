@@ -6,7 +6,9 @@ import { ThemeProvider } from './providers/theme-provider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from './hooks/use-toast';
 import AuthProvider from './context/AuthProvider';
+import { loadStripe } from '@stripe/stripe-js';
 
+window.loadStripe = loadStripe;
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {

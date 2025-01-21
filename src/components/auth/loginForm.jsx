@@ -10,12 +10,13 @@ import Lottie from 'lottie-react';
 import loginAnimation from '@/assets/login-animation.json';
 import useAuth from '@/hooks/use-AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import useAxiosPublic from '@/hooks/use-AxiosPublic';
 
 const LoginForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { signIn, googleLogin, loading } = useAuth();
+	const { signIn, googleLogin, loading, user } = useAuth();
 	const { addToast } = useToast();
-
+	const axiosPublic = useAxiosPublic();
 	const {
 		register,
 		handleSubmit,
@@ -29,7 +30,7 @@ const LoginForm = () => {
 
 	const onSubmit = async (data) => {
 		try {
-			await signIn(data.email, data.password);
+			const result = await signIn(data.email, data.password);
 			addToast('Signed in successfully!', 'success');
 		} catch (error) {
 			addToast('Invalid email or password', 'error');
@@ -38,10 +39,24 @@ const LoginForm = () => {
 
 	const handleGoogleLogin = async () => {
 		try {
-			await googleLogin();
-			addToast('Signed in with Google successfully!', 'success');
+			const result = await googleLogin();
+			const { displayName, email, photoURL } = result.user;
+
+			const userInfo = {
+				name: displayName,
+				email: email,
+				photo: photoURL,
+			};
+
+			const response = await axiosPublic.post('/users', userInfo);
+			if (response.data.success) {
+				console.log(response.data.message);
+			} else {
+				return console.log(response.data.message);
+			}
+			addToast(`Welcome to KnowledgeHerald ${user ? user.displayName : ''}`, 'success');
 		} catch (error) {
-			addToast('Could not sign in with Google', 'error');
+			addToast(error.message, 'error');
 		}
 	};
 

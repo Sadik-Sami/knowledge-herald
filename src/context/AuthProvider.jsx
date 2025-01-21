@@ -10,13 +10,14 @@ import {
 	updateProfile,
 } from 'firebase/auth';
 import auth from '../firebase/firebase.init';
+import useAxiosPublic from '@/hooks/use-AxiosPublic';
 
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const googleProvider = new GoogleAuthProvider();
-
-	// ? Creating user
+	const axiosPublic = useAxiosPublic();
+	// ? Creating User
 	const signUp = async (email, password) => {
 		setLoading(true);
 		try {
@@ -99,12 +100,12 @@ const AuthProvider = ({ children }) => {
 			try {
 				if (currentUser?.email) {
 					const user = { email: currentUser.email };
-					console.log('User ready to recieve token:', user);
-					// const { data } = await axiosPublic.post('/auth/login', user);
-					// if (!data.success) {
-					// return console.log('Failed to get authorized');
-					// }
-					// localStorage.setItem('access-token', data.uToken);
+					const { data } = await axiosPublic.post('/auth/login', user);
+					if (!data.success) {
+						return console.log('Failed to get authorized');
+					}
+					localStorage.setItem('access-token', data.uToken);
+					console.log(currentUser);
 					setUser(currentUser);
 				} else {
 					localStorage.removeItem('access-token');
