@@ -9,16 +9,13 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Menu, User, X } from 'lucide-react';
-// import { useAuth } from '@/contexts/auth-context';
 import { ThemeToggle } from './ThemeToggle';
 import { cn } from '@/lib/utils';
+import useAuth from '@/hooks/use-AuthContext';
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	// const { user, signOut } = useAuth();
-	const user = { isAdmin: true, hasSubscription: true };
-  // const user = null
-	const signOut = () => {};
+	const { user, signOut } = useAuth();
 	const location = useLocation();
 
 	const navItems = [
@@ -27,8 +24,8 @@ const Navbar = () => {
 		{ title: 'All Articles', href: '/articles' },
 		{ title: 'Subscription', href: '/subscription', protected: true },
 		{ title: 'My Articles', href: '/my-articles', protected: true },
-		{ title: 'Premium Articles', href: '/premium', protected: true, requiresSub: true },
-		{ title: 'Dashboard', href: '/dashboard', protected: true, adminOnly: true },
+		{ title: 'Premium Articles', href: '/premium', protected: true, requiresSub: false }, // requires sub to true when sub is available
+		{ title: 'Dashboard', href: '/dashboard', protected: true, adminOnly: false }, //change adminOnly to true when admin checking is immplemented
 	];
 
 	const filteredItems = navItems.filter((item) => {
