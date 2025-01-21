@@ -66,7 +66,7 @@ const RegisterForm = () => {
 			email: '',
 			password: '',
 			confirmPassword: '',
-			avatar: null,
+			avatar: undefined, // Changed from null to undefined
 		},
 	});
 
@@ -102,8 +102,8 @@ const RegisterForm = () => {
 			}
 
 			let imageUrl = null;
-			if (data.avatar?.[0]) {
-				imageUrl = await uploadImage(data.avatar[0]);
+			if (data.avatar) {
+				imageUrl = await uploadImage(data.avatar);
 			}
 
 			const userCredential = await signUp(data.email, data.password);
@@ -153,8 +153,10 @@ const RegisterForm = () => {
 						accept='image/*'
 						className='hidden'
 						ref={fileInputRef}
-						{...register('avatar')}
-						onChange={handleImageChange}
+						onChange={(e) => {
+							handleImageChange(e);
+							register('avatar').onChange(e); // This ensures react-hook-form gets the file
+						}}
 					/>
 				</div>
 
