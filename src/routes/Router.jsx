@@ -2,6 +2,7 @@ import AdminLayout from '@/layout/AdminLayout';
 import UserLayout from '@/layout/UserLayout';
 import Home from '@/pages/Home';
 import LoginPage from '@/pages/LoginPage';
+import PaymentSuccessPage from '@/pages/PaymentSuccessPage';
 import RegisterPage from '@/pages/RegisterPage';
 import SubscriptionPage from '@/pages/SubsciptionPage';
 import { createBrowserRouter } from 'react-router-dom';
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/subscription',
 				element: <SubscriptionPage />,
+			},
+			{
+				path: '/payment/success',
+				element: <PaymentSuccessPage />,
 			},
 		],
 	},

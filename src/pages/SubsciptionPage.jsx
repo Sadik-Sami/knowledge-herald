@@ -42,14 +42,13 @@ const SubscriptionPage = () => {
 		try {
 			setLoading(true);
 			const { data } = await axiosSecure.post('/create-payment-intent', {
-				planId: plan._id, // Changed from plan.id to plan._id
+				planId: plan._id,
 				email: user.email,
 			});
 
 			if (!data.success) {
 				throw new Error(data.message);
 			}
-      console.log(import.meta.env.VITE_STRIPE_PK);
 			const stripe = await window.loadStripe(import.meta.env.VITE_STRIPE_PK);
 			await stripe.redirectToCheckout({
 				sessionId: data.sessionId,
