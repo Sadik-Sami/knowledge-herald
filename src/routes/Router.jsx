@@ -3,6 +3,7 @@ import UserLayout from '@/layout/UserLayout';
 import Home from '@/pages/Home';
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
+import SubscriptionPage from '@/pages/SubsciptionPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
 				element: <LoginPage />,
 			},
 			{ path: '/register', element: <RegisterPage /> },
+			{
+				path: '/subscription',
+				element: <SubscriptionPage />,
+			},
 		],
 	},
 	{
