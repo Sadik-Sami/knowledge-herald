@@ -1,5 +1,6 @@
 import AdminLayout from '@/layout/AdminLayout';
 import UserLayout from '@/layout/UserLayout';
+import AddArticle from '@/pages/AddArticle';
 import Home from '@/pages/Home';
 import LoginPage from '@/pages/LoginPage';
 import PaymentSuccessPage from '@/pages/PaymentSuccessPage';
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/payment/success',
 				element: <PaymentSuccessPage />,
+			},
+			{
+				path: '/add-article',
+				element: <AddArticle />,
 			},
 		],
 	},

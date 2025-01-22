@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Users, FileText, Building2, Menu, X, ChevronRight, ChevronLeft, LayoutDashboard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import useAuth from '@/hooks/use-AuthContext';
 
 const AdminLayout = () => {
 	const [isCollapsed, setIsCollapsed] = useState(false);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
-	// const { user } = useAuth()
-	const user = null;
+	const { user } = useAuth();
 	const location = useLocation();
 
 	const navItems = [
@@ -37,7 +37,7 @@ const AdminLayout = () => {
 	];
 
 	return (
-		<div className='min-h-screen bg-background'>
+		<div className='min-h-screen bg-background flex'>
 			{/* Top Navigation for Mobile */}
 			<header className='sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden'>
 				<div className='container flex h-14 items-center'>
