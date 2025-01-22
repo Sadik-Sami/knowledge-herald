@@ -12,11 +12,14 @@ import { Menu, User, X } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { cn } from '@/lib/utils';
 import useAuth from '@/hooks/use-AuthContext';
+import useSubscription from '@/hooks/use-Subscription';
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { user, signOut } = useAuth();
 	const location = useLocation();
+	const { hasSubscription } = useSubscription();
+	// const 
 
 	const navItems = [
 		{ title: 'Home', href: '/' },
@@ -25,12 +28,12 @@ const Navbar = () => {
 		{ title: 'Subscription', href: '/subscription', protected: true },
 		{ title: 'My Articles', href: '/my-articles', protected: true },
 		{ title: 'Premium Articles', href: '/premium', protected: true, requiresSub: false }, // requires sub to true when sub is available
-		{ title: 'Dashboard', href: '/dashboard', protected: true, adminOnly: false }, //change adminOnly to true when admin checking is immplemented
+		{ title: 'Dashboard', href: '/dashboard', protected: true, adminOnly: true }, //change adminOnly to true when admin checking is immplemented
 	];
 
 	const filteredItems = navItems.filter((item) => {
 		if (item.adminOnly && !user?.isAdmin) return false;
-		if (item.requiresSub && !user?.hasSubscription) return false;
+		if (item.requiresSub && !hasSubscription) return false;
 		if (item.protected && !user) return false;
 		return true;
 	});
