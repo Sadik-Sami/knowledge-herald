@@ -1,6 +1,8 @@
 import AdminLayout from '@/layout/AdminLayout';
 import UserLayout from '@/layout/UserLayout';
 import AddArticle from '@/pages/AddArticle';
+import AddPublisher from '@/pages/AddPublisher';
+import AllArticles from '@/pages/AllArticles';
 import Home from '@/pages/Home';
 import LoginPage from '@/pages/LoginPage';
 import PaymentSuccessPage from '@/pages/PaymentSuccessPage';
@@ -35,12 +37,21 @@ export const router = createBrowserRouter([
 				path: '/add-article',
 				element: <AddArticle />,
 			},
+			{
+				path: '/articles',
+				element: <AllArticles />,
+			},
 		],
 	},
 	{
 		path: '/dashboard',
 		element: <AdminLayout />,
 		errorElement: <></>,
-		children: [],
+		children: [
+			{
+				path: 'add-publisher',
+				element: <AddPublisher />,
+			},
+		],
 	},
 ]);

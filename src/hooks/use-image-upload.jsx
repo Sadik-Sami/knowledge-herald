@@ -5,11 +5,9 @@ const useImageUpload = () => {
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState(null);
 	const axiosPublic = useAxiosPublic();
-	console.log(import.meta.env.VITE_IMGBB_API_KEY);
 	const uploadImage = async (file) => {
 		setUploading(true);
 		setError(null);
-		console.log('inside image upload');
 		try {
 			const formData = new FormData();
 			formData.append('image', file);
@@ -18,7 +16,6 @@ const useImageUpload = () => {
 				`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
 				formData
 			);
-			console.log(response);
 			return response.data.data.url;
 		} catch (err) {
 			setError('Failed to upload image');

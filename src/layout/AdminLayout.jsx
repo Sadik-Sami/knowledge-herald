@@ -37,7 +37,7 @@ const AdminLayout = () => {
 	];
 
 	return (
-		<div className='min-h-screen bg-background flex'>
+		<div className='min-h-screen bg-background md:flex gap-6'>
 			{/* Top Navigation for Mobile */}
 			<header className='sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden'>
 				<div className='container flex h-14 items-center'>
@@ -140,12 +140,14 @@ const AdminLayout = () => {
 			</motion.aside>
 
 			{/* Main Content */}
-			<main className={cn('min-h-screen transition-all duration-300', 'md:ml-[280px]', isCollapsed && 'md:ml-[80px]')}>
-				<div className='container py-6'>
+			<main className={cn('min-h-screen transition-all duration-300 flex-[0.9] mx-auto')}>
+				<div className='max-w-7xl mx-auto py-6 px-4'>
 					<Outlet />
 				</div>
 			</main>
-
+			{/* <main>
+				<Outlet />
+			</main> */}
 			{/* Mobile Overlay */}
 			<AnimatePresence>
 				{isMobileOpen && (
