@@ -85,7 +85,7 @@ const MyArticles = () => {
 	}
 
 	return (
-		<div className='container px-4 md:px-6 py-12'>
+		<div className='container mx-auto px-4 md:px-6 py-12'>
 			<ConfirmationDialog />
 			<div className='space-y-8'>
 				<div>
