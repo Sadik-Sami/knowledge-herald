@@ -3,6 +3,7 @@ import UserLayout from '@/layout/UserLayout';
 import AddArticle from '@/pages/AddArticle';
 import AddPublisher from '@/pages/AddPublisher';
 import AllArticles from '@/pages/AllArticles';
+import ArticleDetails from '@/pages/ArticleDetails';
 import Home from '@/pages/Home';
 import LoginPage from '@/pages/LoginPage';
 import PaymentSuccessPage from '@/pages/PaymentSuccessPage';
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/articles',
 				element: <AllArticles />,
+			},
+			{
+				path: '/articles/:id',
+				element: <ArticleDetails />,
 			},
 		],
 	},
