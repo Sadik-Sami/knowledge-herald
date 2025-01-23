@@ -11,6 +11,7 @@ import PaymentSuccessPage from '@/pages/PaymentSuccessPage';
 import RegisterPage from '@/pages/RegisterPage';
 import SubscriptionPage from '@/pages/SubsciptionPage';
 import { createBrowserRouter } from 'react-router-dom';
+import EditArticle from '@/pages/EditArticle';
 
 export const router = createBrowserRouter([
 	{
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/my-articles',
 				element: <MyArticles />,
+			},
+			{
+				path: '/edit-article/:id',
+				element: <EditArticle />,
 			},
 		],
 	},

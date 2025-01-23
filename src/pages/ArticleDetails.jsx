@@ -28,6 +28,7 @@ const ArticleDetails = () => {
 	const {
 		data: article,
 		isLoading: articleLoading,
+		refetch: refetchArticle,
 	} = useQuery({
 		queryKey: ['article', id],
 		queryFn: async () => {
@@ -81,6 +82,7 @@ const ArticleDetails = () => {
 	});
 
 	useEffect(() => {
+		refetchArticle();
 		if (article && !viewIncremented) {
 			incrementView();
 			setViewIncremented(true);
