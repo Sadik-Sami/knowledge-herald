@@ -17,7 +17,7 @@ const MyArticles = () => {
 	const { addToast } = useToast();
 	const axiosSecure = useAxiosSecure();
 	const queryClient = useQueryClient();
-	const { showConfirmation } = useConfirmation();
+	const { confirm, ConfirmationDialog } = useConfirmation();
 	const [page, setPage] = useState(1);
 	const [selectedReason, setSelectedReason] = useState(null);
 	const [isReasonModalOpen, setIsReasonModalOpen] = useState(false);
@@ -27,7 +27,6 @@ const MyArticles = () => {
 		queryKey: ['my-articles', user?.email, page],
 		queryFn: async () => {
 			const { data } = await axiosSecure.get(`/articles/my-articles/${user.email}?page=${page}&limit=10`);
-			console.log(data.data);
 			return data.data;
 		},
 		enabled: !!user?.email,
@@ -50,7 +49,7 @@ const MyArticles = () => {
 	});
 
 	const handleDelete = async (id) => {
-		const confirmed = await showConfirmation({
+		const confirmed = await confirm({
 			title: 'Delete Article',
 			message: 'Are you sure you want to delete this article? This action cannot be undone.',
 			confirmText: 'Delete',
@@ -86,7 +85,8 @@ const MyArticles = () => {
 	}
 
 	return (
-		<div className='container mx-auto px-4 md:px-6 py-12'>
+		<div className='container px-4 md:px-6 py-12'>
+			<ConfirmationDialog />
 			<div className='space-y-8'>
 				<div>
 					<h1 className='text-3xl font-bold'>My Articles</h1>
