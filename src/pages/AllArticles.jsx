@@ -10,6 +10,8 @@ import { Search, Filter, Star, Eye, Clock, ChevronLeft, ChevronRight, Loader2 } 
 import useAxiosSecure from '@/hooks/use-AxiosSecure';
 import useSubscription from '@/hooks/use-Subscription';
 import { techTags } from '@/data/tags';
+import usePublishers from '@/hooks/use-publishers';
+import useArticles from '@/hooks/user-article';
 
 const AllArticles = () => {
 	const navigate = useNavigate();
@@ -20,32 +22,8 @@ const AllArticles = () => {
 	const [search, setSearch] = useState('');
 	const [selectedPublisher, setSelectedPublisher] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
-
-	const { data: publishers = [] } = useQuery({
-		queryKey: ['publishers'],
-		queryFn: async () => {
-			const { data } = await axiosSecure.get('/publishers');
-			return data.data;
-		},
-	});
-
-	const { data: articlesData = {}, isLoading } = useQuery({
-		queryKey: ['articles', page, search, selectedPublisher, selectedTags],
-		queryFn: async () => {
-			const searchParams = new URLSearchParams({
-				page,
-				limit: 9,
-				search,
-				...(selectedPublisher && { publisher: selectedPublisher.value }),
-				...(selectedTags.length && { tags: selectedTags.map((t) => t.value).join(',') }),
-			});
-
-			const { data } = await axiosSecure.get(`/articles?${searchParams}`);
-			return data;
-		},
-		keepPreviousData: true,
-	});
-
+	const { data: publishers = [] } = usePublishers();
+	const { data: articlesData = {}, isLoading } = useArticles(page, search, selectedPublisher, selectedTags);
 	const { data: articles = [], totalPages = 1 } = articlesData;
 
 	const cardVariants = {
