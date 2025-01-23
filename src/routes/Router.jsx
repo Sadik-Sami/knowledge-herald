@@ -6,6 +6,7 @@ import AllArticles from '@/pages/AllArticles';
 import ArticleDetails from '@/pages/ArticleDetails';
 import Home from '@/pages/Home';
 import LoginPage from '@/pages/LoginPage';
+import MyArticles from '@/pages/MyArticles';
 import PaymentSuccessPage from '@/pages/PaymentSuccessPage';
 import RegisterPage from '@/pages/RegisterPage';
 import SubscriptionPage from '@/pages/SubsciptionPage';
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/articles/:id',
 				element: <ArticleDetails />,
+			},
+			{
+				path: '/my-articles',
+				element: <MyArticles />,
 			},
 		],
 	},
