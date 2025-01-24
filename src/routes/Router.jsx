@@ -15,6 +15,7 @@ import EditArticle from '@/pages/EditArticle';
 import PremiumArticles from '@/pages/PremiumArticles';
 import AllUsers from '@/pages/Dashboard/AllUsers';
 import AllArticlesDashboard from '@/pages/Dashboard/AllArticlesDashboard';
+import Statistics from '@/pages/Dashboard/Statistics';
 
 export const router = createBrowserRouter([
 	{
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
 		element: <AdminLayout />,
 		errorElement: <></>,
 		children: [
+			{
+				path: '/dashboard',
+				element: <Statistics />,
+			},
 			{
 				path: '/dashboard/users',
 				element: <AllUsers />,

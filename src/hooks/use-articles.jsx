@@ -1,25 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './use-AxiosSecure';
 
-const useArticles = (
-	page = 1,
-	search = '',
-	publisher = null,
-	tags = [],
-	status = 'approved' // Can be 'approved', 'pending', 'declined', or an array like ['approved', 'pending', 'declined']
-) => {
+const useArticles = (page = 1, limit = 5, search = '', publisher = null, tags = [], status = 'approved') => {
 	const axiosSecure = useAxiosSecure();
-
 	const {
 		data = {},
 		isLoading,
 		refetch,
 	} = useQuery({
-		queryKey: ['articles', page, search, publisher, tags, status],
+		queryKey: ['articles', page, limit, search, publisher, tags, status],
 		queryFn: async () => {
 			const searchParams = new URLSearchParams({
 				page: page.toString(),
-				limit: '10',
+				limit: limit.toString(),
 				...(search && { search }),
 				...(publisher && { publisher: publisher.value }),
 				...(tags.length && { tags: tags.map((t) => t.value).join(',') }),

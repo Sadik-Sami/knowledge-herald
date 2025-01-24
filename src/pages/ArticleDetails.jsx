@@ -33,6 +33,7 @@ const ArticleDetails = () => {
 		queryKey: ['article', id],
 		queryFn: async () => {
 			const { data } = await axiosSecure.get(`/articles/${id}`);
+			console.log(data.data);
 			return data.data;
 		},
 		onSuccess: (data) => {

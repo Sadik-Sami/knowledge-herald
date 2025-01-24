@@ -6,18 +6,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Search, Filter, Star, Eye, Clock, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
-import useAxiosSecure from '@/hooks/use-AxiosSecure';
 import useSubscription from '@/hooks/use-Subscription';
 import { techTags } from '@/data/tags';
 import usePublishers from '@/hooks/use-publishers';
 import useArticles from '@/hooks/use-articles';
+import { Select as UISelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const AllArticles = () => {
 	const navigate = useNavigate();
 	const { hasSubscription } = useSubscription();
 	const searchTimeout = useRef(null);
-
 	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(10);
 	const [search, setSearch] = useState('');
 	const [selectedPublisher, setSelectedPublisher] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
@@ -27,7 +27,7 @@ const AllArticles = () => {
 		data: articlesData = {},
 		isLoading,
 		refetch,
-	} = useArticles(page, search, selectedPublisher, selectedTags, 'approved');
+	} = useArticles(page, limit, search, selectedPublisher, selectedTags, 'approved');
 
 	const { data: articles = [], totalPages = 1 } = articlesData;
 
@@ -83,7 +83,7 @@ const AllArticles = () => {
 							/>
 						</div>
 
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+						<div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 							<Select
 								placeholder='Filter by publisher'
 								options={publishers.map((pub) => ({
@@ -110,6 +110,18 @@ const AllArticles = () => {
 								}}
 								className='w-full text-black/75'
 							/>
+							<UISelect value={limit.toString()} onValueChange={(v) => setLimit(Number(v))}>
+								<SelectTrigger className='w-full'>
+									<SelectValue placeholder='Select Items per page' />
+								</SelectTrigger>
+								<SelectContent>
+									{[5, 10, 15, 20].map((value) => (
+										<SelectItem key={value} value={value.toString()}>
+											{value} Items
+										</SelectItem>
+									))}
+								</SelectContent>
+							</UISelect>
 						</div>
 					</div>
 				</div>

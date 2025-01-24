@@ -130,7 +130,7 @@ const EditArticle = () => {
 				}}>
 				<div className='absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/70 to-primary/80 backdrop-blur-sm' />
 				<div className='absolute inset-0 bg-grid-white/10' />
-				<div className='relative container h-full flex items-center justify-center text-white'>
+				<div className='relative container mx-auto h-full flex items-center justify-center text-white'>
 					<div className='text-center'>
 						<h1 className='text-4xl font-bold mb-4'>Edit Your Article</h1>
 						<p className='text-lg text-white/90'>Update and improve your content</p>
@@ -139,7 +139,7 @@ const EditArticle = () => {
 			</div>
 
 			{/* Form Card */}
-			<div className='container px-4 md:px-6'>
+			<div className='container mx-auto px-4 md:px-6 mb-12'>
 				<motion.div initial={{ y: -50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5 }}>
 					<Card className='max-w-4xl mx-auto -mt-20 relative z-10 shadow-xl p-6'>
 						<form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
@@ -190,7 +190,7 @@ const EditArticle = () => {
 													label: pub.name,
 												}))}
 												isLoading={publishersLoading}
-												className='pl-10'
+												className='pl-10 text-black'
 												classNamePrefix='select'
 												placeholder='Select publisher'
 											/>
@@ -213,7 +213,7 @@ const EditArticle = () => {
 												{...field}
 												isMulti
 												options={techTags}
-												className='pl-10'
+												className='pl-10 text-black'
 												classNamePrefix='select'
 												placeholder='Select tags'
 											/>

@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import useConfirmation from '@/hooks/use-confirmation';
 import { useToast } from '@/hooks/use-toast';
 import useAxiosSecure from '@/hooks/use-AxiosSecure';
-import Pagination from '@/components/Pagination';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const AllUsers = () => {
 	const [page, setPage] = useState(1);
@@ -27,16 +25,16 @@ const AllUsers = () => {
 			const { data } = await axiosSecure.get(`/users?page=${page}&limit=${limit}`);
 			return data;
 		},
-		keepPreviousData: true, // Optional: smooth transitions during pagination
+		keepPreviousData: true,
 	});
-
+	const totalPages = Math.ceil(users.total / limit);
 	const handleMakeAdmin = async (userId) => {
 		const confirmed = await confirm({
 			title: 'Make Admin',
 			description: 'Are you sure you want to make this user an admin?',
 			onConfirm: async () => {
 				try {
-					const response = await axios.patch(`/make-admin/${userId}`);
+					const response = await axiosSecure.patch(`/make-admin/${userId}`);
 					if (response.data.success) {
 						refetch();
 						return response;
@@ -131,7 +129,58 @@ const AllUsers = () => {
 			</div>
 
 			<div>
-				<Pagination totalItems={users.total} itemsPerPage={limit} onChange={(newPage) => setPage(newPage)} />
+				{/* {totalPages > 1 && (
+					<div className='flex justify-center items-center gap-2 mt-8'>
+						<Button
+							variant='outline'
+							size='icon'
+							onClick={() => {
+								setPage((p) => Math.max(1, p - 1));
+								refetch();
+							}}
+							disabled={page === 1}>
+							<ChevronLeft className='h-4 w-4' />
+						</Button>
+
+						<span className='text-sm text-muted-foreground'>
+							Page {page} of {totalPages}
+						</span>
+
+						<Button
+							variant='outline'
+							size='icon'
+							onClick={() => {
+								setPage((p) => Math.min(totalPages, p + 1));
+								refetch();
+							}}
+							disabled={page === totalPages}>
+							<ChevronRight className='h-4 w-4' />
+						</Button>
+					</div>
+				)} */}
+				{totalPages > 1 && (
+					<div className='flex justify-center items-center gap-2 mt-8'>
+						<Button
+							variant='outline'
+							size='icon'
+							onClick={() => setPage((p) => Math.max(1, p - 1))}
+							disabled={page === 1}>
+							<ChevronLeft className='h-4 w-4' />
+						</Button>
+
+						<span className='text-sm text-muted-foreground'>
+							Page {page} of {totalPages}
+						</span>
+
+						<Button
+							variant='outline'
+							size='icon'
+							onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+							disabled={page === totalPages}>
+							<ChevronRight className='h-4 w-4' />
+						</Button>
+					</div>
+				)}
 			</div>
 
 			<ConfirmationDialog />

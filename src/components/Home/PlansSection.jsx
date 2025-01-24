@@ -42,7 +42,7 @@ const PlansSection = () => {
 					<p className='mt-4 text-muted-foreground md:text-lg'>Select a plan that suits your needs</p>
 				</div>
 
-				<div className='grid md:grid-cols-3 gap-8 max-w-7xl mx-auto'>
+				<div className='grid md:grid-cols-3 gap-8 container mx-auto'>
 					{plans.map((plan) => (
 						<motion.div
 							key={plan._id}

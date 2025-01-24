@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import Select from 'react-select';
@@ -15,7 +15,7 @@ import usePublishers from '@/hooks/use-publishers';
 const PremiumArticles = () => {
 	const navigate = useNavigate();
 	const axiosSecure = useAxiosSecure();
-	const { hasSubscription } = useSubscription();
+	const { hasSubscription, refetch } = useSubscription();
 	const [page, setPage] = useState(1);
 	const [search, setSearch] = useState('');
 	const [selectedPublisher, setSelectedPublisher] = useState(null);
@@ -47,7 +47,9 @@ const PremiumArticles = () => {
 	});
 
 	const { data: articles = [], totalPages = 1 } = articlesData;
-
+	useEffect(() => {
+		refetch();
+	}, []);
 	// If user doesn't have subscription
 	if (!hasSubscription) {
 		return (
@@ -87,7 +89,7 @@ const PremiumArticles = () => {
 			<section className='relative py-20 overflow-hidden'>
 				<div className='absolute inset-0 bg-gradient-to-r from-primary to-primary/80' />
 				<div className='absolute inset-0 bg-grid-white/10' />
-				<div className='relative container px-4 md:px-6'>
+				<div className='relative container px-4 md:px-6 mx-auto'>
 					<div className='flex flex-col items-center text-center space-y-4'>
 						<div className='p-3 rounded-full bg-white/10 backdrop-blur-sm'>
 							<Crown className='h-6 w-6 text-white' />
@@ -102,7 +104,7 @@ const PremiumArticles = () => {
 
 			{/* Filters Section */}
 			<section className='py-12 border-b'>
-				<div className='container px-4 md:px-6'>
+				<div className='container px-4 md:px-6 mx-auto'>
 					<div className='max-w-4xl mx-auto space-y-4'>
 						<div className='relative'>
 							<Search className='absolute left-3 top-3 h-4 w-4 text-muted-foreground' />
@@ -125,7 +127,7 @@ const PremiumArticles = () => {
 								value={selectedPublisher}
 								onChange={setSelectedPublisher}
 								isClearable
-								className='w-full'
+								className='w-full text-black/80'
 							/>
 
 							<Select
@@ -134,7 +136,7 @@ const PremiumArticles = () => {
 								options={techTags}
 								value={selectedTags}
 								onChange={setSelectedTags}
-								className='w-full'
+								className='w-full text-black/80'
 							/>
 						</div>
 					</div>
@@ -143,7 +145,7 @@ const PremiumArticles = () => {
 
 			{/* Articles Grid */}
 			<section className='py-12'>
-				<div className='container px-4 md:px-6'>
+				<div className='container mx-auto px-4 md:px-6'>
 					{isLoading ? (
 						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 							{[...Array(9)].map((_, i) => (

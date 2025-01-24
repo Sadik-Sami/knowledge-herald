@@ -23,19 +23,23 @@ const Pagination = ({ totalItems, itemsPerPage }) => {
 	};
 
 	return (
-		<div className='flex justify-around gap-11 items-center'>
-			<p>Page: {page}</p>
+		<div className='flex justify-around gap-4 items-center'>
+			<Button onClick={() => page > 1 && setPage(page - 1)} disabled={page === 1}>
+				Previous
+			</Button>
 			{getVisiblePages().map((pageNum, i) => (
 				<Button
 					key={i}
-					variant={pageNum === page ? 'default' : 'outline'}
-					size='icon'
+					type={pageNum === page ? 'primary' : 'default'}
+					size='small'
 					onClick={() => pageNum !== '...' && setPage(pageNum)}
 					disabled={pageNum === '...'}>
-					{pageNum.toString()}
+					{pageNum}
 				</Button>
 			))}
-			<p>Total Pages: {totalPages}</p>
+			<Button onClick={() => page < totalPages && setPage(page + 1)} disabled={page === totalPages}>
+				Next
+			</Button>
 		</div>
 	);
 };

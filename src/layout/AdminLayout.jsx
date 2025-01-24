@@ -73,7 +73,7 @@ const AdminLayout = () => {
 							isCollapsed && 'md:opacity-0 md:invisible'
 						)}>
 						<LayoutDashboard className='h-5 w-5' />
-						<span>TechNews Admin</span>
+						<span>Admin</span>
 					</Link>
 					<div className='flex items-center gap-2'>
 						<Button variant='ghost' size='icon' className='md:hidden' onClick={() => setIsMobileOpen(false)}>
