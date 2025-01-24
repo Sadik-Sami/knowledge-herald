@@ -41,9 +41,9 @@ const Statistics = () => {
 	// Prepare data for user engagement bar chart
 	const engagementData = [
 		['Metric', 'Count', { role: 'style' }],
-		['Views', parseInt(stats.totalViews), '#4CAF50'],
-		['Comments', parseInt(stats.totalComments), '#2196F3'],
-		['Ratings', parseInt(stats.totalRatings), '#FFC107'],
+		['Views', stats.totalViews, '#4CAF50'],
+		['Comments', stats.totalComments, '#2196F3'],
+		['Ratings', stats.totalRatings, '#FFC107'],
 	];
 
 	return (
@@ -129,31 +129,8 @@ const Statistics = () => {
 						/>
 					</CardContent>
 				</Card>
-
-				{/* Monthly Articles */}
-				<Card>
-					<CardHeader>
-						<CardTitle>Articles Growth</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<Chart
-							chartType='LineChart'
-							data={monthlyData}
-							options={{
-								curveType: 'function',
-								legend: { position: 'bottom' },
-								colors: ['#4CAF50', '#FFC107'],
-								chartArea: { width: '100%', height: '70%' },
-								vAxis: { minValue: 0 },
-							}}
-							width='100%'
-							height='300px'
-						/>
-					</CardContent>
-				</Card>
-
 				{/* User Engagement */}
-				<Card className='md:col-span-2'>
+				<Card className=''>
 					<CardHeader>
 						<CardTitle>User Engagement</CardTitle>
 					</CardHeader>
@@ -166,7 +143,7 @@ const Statistics = () => {
 								chartArea: { width: '100%', height: '70%' },
 								vAxis: { minValue: 0 },
 								animation: {
-									startup: true,
+									startup: false,
 									easing: 'out',
 									duration: 1000,
 								},
