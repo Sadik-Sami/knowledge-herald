@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Users, FileText, Building2, Menu, X, ChevronRight, ChevronLeft, LayoutDashboard } from 'lucide-react';
+import { Users, FileText, Building2, Menu, X, ChevronRight, ChevronLeft, LayoutDashboard, Home } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import useAuth from '@/hooks/use-AuthContext';
@@ -33,6 +33,11 @@ const AdminLayout = () => {
 			title: 'Add Publisher',
 			icon: Building2,
 			href: '/dashboard/add-publisher',
+		},
+		{
+			title: 'Home',
+			icon: Home,
+			href: '/',
 		},
 	];
 
