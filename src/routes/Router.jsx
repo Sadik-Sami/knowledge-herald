@@ -16,6 +16,8 @@ import PremiumArticles from '@/pages/PremiumArticles';
 import AllUsers from '@/pages/Dashboard/AllUsers';
 import AllArticlesDashboard from '@/pages/Dashboard/AllArticlesDashboard';
 import Statistics from '@/pages/Dashboard/Statistics';
+import PrivateRoutes from './PrivateRoutes';
+import AdminRoutes from './AdminRoutes';
 
 export const router = createBrowserRouter([
 	{
@@ -34,7 +36,11 @@ export const router = createBrowserRouter([
 			{ path: '/register', element: <RegisterPage /> },
 			{
 				path: '/subscription',
-				element: <SubscriptionPage />,
+				element: (
+					<PrivateRoutes>
+						<SubscriptionPage />
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/payment/success',
@@ -42,7 +48,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: '/add-article',
-				element: <AddArticle />,
+				element: (
+					<PrivateRoutes>
+						<AddArticle />
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/articles',
@@ -50,11 +60,19 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: '/articles/:id',
-				element: <ArticleDetails />,
+				element: (
+					<PrivateRoutes>
+						<ArticleDetails />
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/my-articles',
-				element: <MyArticles />,
+				element: (
+					<PrivateRoutes>
+						<MyArticles />
+					</PrivateRoutes>
+				),
 			},
 			{
 				path: '/edit-article/:id',
@@ -62,7 +80,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: '/premium',
-				element: <PremiumArticles />,
+				element: (
+					<PrivateRoutes>
+						<PremiumArticles />
+					</PrivateRoutes>
+				),
 			},
 		],
 	},
@@ -73,19 +95,35 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/dashboard',
-				element: <Statistics />,
+				element: (
+					<AdminRoutes>
+						<Statistics />
+					</AdminRoutes>
+				),
 			},
 			{
 				path: '/dashboard/users',
-				element: <AllUsers />,
+				element: (
+					<AdminRoutes>
+						<AllUsers />
+					</AdminRoutes>
+				),
 			},
 			{
 				path: '/dashboard/articles',
-				element: <AllArticlesDashboard />,
+				element: (
+					<AdminRoutes>
+						<AllArticlesDashboard />
+					</AdminRoutes>
+				),
 			},
 			{
 				path: '/dashboard/add-publisher',
-				element: <AddPublisher />,
+				element: (
+					<AdminRoutes>
+						<AddPublisher />
+					</AdminRoutes>
+				),
 			},
 		],
 	},

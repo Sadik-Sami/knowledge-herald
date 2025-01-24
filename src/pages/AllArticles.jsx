@@ -31,26 +31,21 @@ const AllArticles = () => {
 
 	const { data: articles = [], totalPages = 1 } = articlesData;
 
-	// Handle search with debounce
 	const handleSearch = (value) => {
 		if (searchTimeout.current) {
 			clearTimeout(searchTimeout.current);
 		}
-
 		searchTimeout.current = setTimeout(() => {
 			setSearch(value);
-			setPage(1); // Reset to first page when searching
+			setPage(1);
 		}, 300);
 	};
 	useEffect(() => {
 		refetch();
 	}, []);
-	// Reset page when filters change
 	useEffect(() => {
 		setPage(1);
 	}, [selectedPublisher, selectedTags]);
-
-	// Cleanup timeout
 	useEffect(() => {
 		return () => {
 			if (searchTimeout.current) {

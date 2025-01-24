@@ -53,7 +53,6 @@ const AllArticlesDashboard = () => {
 	} = useArticles(page, limit, search, selectedPublisher, selectedTags, ['approved', 'pending', 'declined']);
 
 	const { data: articles = [], totalPages = 1, total } = articlesData;
-	console.log(articlesData);
 
 	// Handle search with debounce
 	const handleSearch = (value) => {
@@ -87,7 +86,7 @@ const AllArticlesDashboard = () => {
 			description: 'Are you sure you want to approve this article?',
 			onConfirm: async () => {
 				try {
-					const response = await axiosSecure.patch(`/articles/${id}`, {
+					const response = await axiosSecure.patch(`/admin/articles/${id}`, {
 						status: 'approved',
 					});
 					if (response.data.success) {
@@ -108,7 +107,7 @@ const AllArticlesDashboard = () => {
 
 	const handleDecline = async () => {
 		try {
-			const response = await axiosSecure.patch(`/articles/${declineDialog.id}`, {
+			const response = await axiosSecure.patch(`/admin/articles/${declineDialog.id}`, {
 				status: 'declined',
 				declined_reason: declineReason,
 			});

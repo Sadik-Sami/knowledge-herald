@@ -32,12 +32,6 @@ const Statistics = () => {
 		...stats.publicationDistribution.map((item) => [item.name, item.count]),
 	];
 
-	// Prepare data for monthly articles line chart
-	const monthlyData = [
-		['Month', 'Free Articles', 'Premium Articles'],
-		...stats.monthlyArticles.map((item) => [item.month, item.freeArticles, item.premiumArticles]),
-	];
-
 	// Prepare data for user engagement bar chart
 	const engagementData = [
 		['Metric', 'Count', { role: 'style' }],

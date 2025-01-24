@@ -9,6 +9,7 @@ const LoginPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const from = location.state?.from?.pathname || '/';
+	console.log(from);
 	useEffect(() => {
 		if (user) {
 			navigate(from, { replace: true });

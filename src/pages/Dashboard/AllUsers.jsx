@@ -72,8 +72,9 @@ const AllUsers = () => {
 				<Table>
 					<TableHeader>
 						<TableRow>
+							<TableHead>#</TableHead>
 							<TableHead>User</TableHead>
-							<TableHead>Email</TableHead>
+							<TableHead>Details</TableHead>
 							<TableHead>Role</TableHead>
 							<TableHead className='text-right'>Actions</TableHead>
 						</TableRow>
@@ -99,25 +100,33 @@ const AllUsers = () => {
 										</TableCell>
 									</TableRow>
 							  ))
-							: users.data?.map((user) => (
+							: users.data?.map((user, index) => (
 									<TableRow key={user._id}>
+										<TableCell>{index + 1}</TableCell>
 										<TableCell>
-											<div className='flex items-center gap-4'>
-												<img
-													src={user.photo || '/placeholder.svg'}
-													alt={user.name || 'Anon'}
-													className='h-10 w-10 rounded-full object-cover'
-												/>
+											<img
+												src={user.photo || '/placeholder.svg'}
+												alt={user.name || 'Anon'}
+												className='h-10 w-10 rounded-full object-cover'
+											/>
+										</TableCell>
+										<TableCell>
+											<div className='flex flex-col'>
 												<span className='font-medium'>{user.name}</span>
+												<span className='font-medium'>{user.email}</span>
 											</div>
 										</TableCell>
-										<TableCell>{user.email}</TableCell>
 										<TableCell>
 											{user.role === 'admin' ? <span className='text-primary font-medium'>Admin</span> : 'User'}
 										</TableCell>
 										<TableCell className='text-right'>
 											{user.role !== 'admin' && (
 												<Button variant='outline' size='sm' onClick={() => handleMakeAdmin(user._id)}>
+													Make Admin
+												</Button>
+											)}
+											{user.role === 'admin' && (
+												<Button variant='outline' disabled size='sm' onClick={() => handleMakeAdmin(user._id)}>
 													Make Admin
 												</Button>
 											)}
@@ -129,35 +138,6 @@ const AllUsers = () => {
 			</div>
 
 			<div>
-				{/* {totalPages > 1 && (
-					<div className='flex justify-center items-center gap-2 mt-8'>
-						<Button
-							variant='outline'
-							size='icon'
-							onClick={() => {
-								setPage((p) => Math.max(1, p - 1));
-								refetch();
-							}}
-							disabled={page === 1}>
-							<ChevronLeft className='h-4 w-4' />
-						</Button>
-
-						<span className='text-sm text-muted-foreground'>
-							Page {page} of {totalPages}
-						</span>
-
-						<Button
-							variant='outline'
-							size='icon'
-							onClick={() => {
-								setPage((p) => Math.min(totalPages, p + 1));
-								refetch();
-							}}
-							disabled={page === totalPages}>
-							<ChevronRight className='h-4 w-4' />
-						</Button>
-					</div>
-				)} */}
 				{totalPages > 1 && (
 					<div className='flex justify-center items-center gap-2 mt-8'>
 						<Button

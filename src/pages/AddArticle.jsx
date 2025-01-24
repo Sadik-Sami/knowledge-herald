@@ -15,6 +15,7 @@ import useAxiosSecure from '@/hooks/use-AxiosSecure';
 import useImageUpload from '@/hooks/use-image-upload';
 import articleImage from '../assets/images/article.jpg';
 import { techTags } from '@/data/tags';
+import { useNavigate } from 'react-router-dom';
 
 const AddArticle = () => {
 	const [loading, setLoading] = useState(false);
@@ -22,6 +23,7 @@ const AddArticle = () => {
 	const { addToast } = useToast();
 	const axiosSecure = useAxiosSecure();
 	const { uploadImage, uploading } = useImageUpload();
+	const navigate = useNavigate();
 
 	const {
 		register,
@@ -43,10 +45,8 @@ const AddArticle = () => {
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
-
 			// Upload image
 			const imageUrl = await uploadImage(data.image[0]);
-
 			const articleData = {
 				title: data.title,
 				image: imageUrl,
@@ -65,14 +65,12 @@ const AddArticle = () => {
 				averageRating: 0,
 				createdAt: new Date(),
 			};
-
 			const { data: response } = await axiosSecure.post('/articles', articleData);
-
 			if (response.success) {
 				addToast('Article submitted successfully!', 'success');
 				reset();
+				navigate('/my-articles');
 			}
-			console.log(articleData);
 		} catch (error) {
 			addToast(error.message || 'Failed to submit article', 'error');
 		} finally {

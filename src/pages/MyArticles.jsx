@@ -51,14 +51,23 @@ const MyArticles = () => {
 	const handleDelete = async (id) => {
 		const confirmed = await confirm({
 			title: 'Delete Article',
-			message: 'Are you sure you want to delete this article? This action cannot be undone.',
-			confirmText: 'Delete',
-			cancelText: 'Cancel',
-			variant: 'destructive',
+			description: 'Are you sure you want to delete this article? This action cannot be undone.',
+			onConfirm: async () => {
+				try {
+					const response = await axiosSecure.delete(`/articles/${id}`);
+					if (response.data.success) {
+						refetch();
+						return response;
+					}
+					throw new Error(response.data.message);
+				} catch (error) {
+					throw new Error(error.response?.data?.message || 'Failed to delete article');
+				}
+			},
 		});
 
 		if (confirmed) {
-			deleteArticle(id);
+			addToast('Article deleted successfully', 'success');
 		}
 	};
 
