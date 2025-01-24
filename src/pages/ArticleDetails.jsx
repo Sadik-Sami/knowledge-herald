@@ -133,11 +133,11 @@ const ArticleDetails = () => {
 		<div className='min-h-screen pb-12'>
 			{/* Article Header */}
 			<div
-				className='relative h-[60vh] bg-cover bg-top'
+				className='relative h-[60vh] bg-cover bg-top rounded-2xl'
 				style={{
 					backgroundImage: `url(${article.image})`,
 				}}>
-				<div className='absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20' />
+				<div className='absolute inset-0 bg-gradient-to-t from-slate-600/80 via-slate-600/60 to-slate-600/20 dark:from-background dark:via-background/60 dark:to-background/20' />
 				<div className='absolute inset-0 flex items-end'>
 					<div className='container mx-auto px-4 md:px-6 pb-12'>
 						<div className='space-y-4'>

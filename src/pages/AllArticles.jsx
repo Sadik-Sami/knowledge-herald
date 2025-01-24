@@ -17,7 +17,7 @@ const AllArticles = () => {
 	const { hasSubscription } = useSubscription();
 	const searchTimeout = useRef(null);
 	const [page, setPage] = useState(1);
-	const [limit, setLimit] = useState(10);
+	const [limit, setLimit] = useState(6);
 	const [search, setSearch] = useState('');
 	const [selectedPublisher, setSelectedPublisher] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
@@ -110,7 +110,7 @@ const AllArticles = () => {
 									<SelectValue placeholder='Select Items per page' />
 								</SelectTrigger>
 								<SelectContent>
-									{[5, 10, 15, 20].map((value) => (
+									{[6, 12, 18, 24].map((value) => (
 										<SelectItem key={value} value={value.toString()}>
 											{value} Items
 										</SelectItem>

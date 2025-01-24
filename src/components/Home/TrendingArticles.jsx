@@ -38,7 +38,6 @@ const TrendingArticles = () => {
 						View All Articles <ArrowRight className='ml-2 h-4 w-4' />
 					</Button>
 				</div>
-				<div className='w-full md:px-4 lg:px-8'>
 					<Swiper
 						spaceBetween={20}
 						centeredSlides={true}
@@ -79,7 +78,7 @@ const TrendingArticles = () => {
 											alt={article.title}
 											className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-105'
 										/>
-										<div className='absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent' />
+										<div className='absolute inset-0 bg-gradient-to-t dark:from-background from-slate-800 dark:via-background/60 via-slate-800/60 to-transparent dark:to-transparent' />
 									</div>
 									<CardContent className='relative h-full flex flex-col justify-end p-6'>
 										<div className='space-y-4'>
@@ -108,7 +107,7 @@ const TrendingArticles = () => {
 							</SwiperSlide>
 						))}
 					</Swiper>
-				</div>
+				
 			</div>
 		</section>
 	);
