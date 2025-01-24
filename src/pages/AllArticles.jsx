@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { motion } from 'framer-motion';
@@ -11,20 +10,54 @@ import useAxiosSecure from '@/hooks/use-AxiosSecure';
 import useSubscription from '@/hooks/use-Subscription';
 import { techTags } from '@/data/tags';
 import usePublishers from '@/hooks/use-publishers';
-import useArticles from '@/hooks/user-article';
+import useArticles from '@/hooks/use-articles';
 
 const AllArticles = () => {
 	const navigate = useNavigate();
-	const axiosSecure = useAxiosSecure();
 	const { hasSubscription } = useSubscription();
+	const searchTimeout = useRef(null);
 
 	const [page, setPage] = useState(1);
 	const [search, setSearch] = useState('');
 	const [selectedPublisher, setSelectedPublisher] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
+
 	const { data: publishers = [] } = usePublishers();
-	const { data: articlesData = {}, isLoading } = useArticles(page, search, selectedPublisher, selectedTags);
+	const {
+		data: articlesData = {},
+		isLoading,
+		refetch,
+	} = useArticles(page, search, selectedPublisher, selectedTags, 'approved');
+
 	const { data: articles = [], totalPages = 1 } = articlesData;
+
+	// Handle search with debounce
+	const handleSearch = (value) => {
+		if (searchTimeout.current) {
+			clearTimeout(searchTimeout.current);
+		}
+
+		searchTimeout.current = setTimeout(() => {
+			setSearch(value);
+			setPage(1); // Reset to first page when searching
+		}, 300);
+	};
+	useEffect(() => {
+		refetch();
+	}, []);
+	// Reset page when filters change
+	useEffect(() => {
+		setPage(1);
+	}, [selectedPublisher, selectedTags]);
+
+	// Cleanup timeout
+	useEffect(() => {
+		return () => {
+			if (searchTimeout.current) {
+				clearTimeout(searchTimeout.current);
+			}
+		};
+	}, []);
 
 	const cardVariants = {
 		hidden: { opacity: 0, y: 20 },
@@ -46,8 +79,7 @@ const AllArticles = () => {
 								type='search'
 								placeholder='Search articles...'
 								className='pl-10'
-								value={search}
-								onChange={(e) => setSearch(e.target.value)}
+								onChange={(e) => handleSearch(e.target.value)}
 							/>
 						</div>
 
@@ -59,7 +91,10 @@ const AllArticles = () => {
 									label: pub.name,
 								}))}
 								value={selectedPublisher}
-								onChange={setSelectedPublisher}
+								onChange={(value) => {
+									setSelectedPublisher(value);
+									refetch();
+								}}
 								isClearable
 								className='w-full text-black/70'
 							/>
@@ -69,7 +104,10 @@ const AllArticles = () => {
 								placeholder='Filter by tags'
 								options={techTags}
 								value={selectedTags}
-								onChange={setSelectedTags}
+								onChange={(value) => {
+									setSelectedTags(value);
+									refetch();
+								}}
 								className='w-full text-black/75'
 							/>
 						</div>
@@ -80,18 +118,16 @@ const AllArticles = () => {
 			{/* Articles Grid */}
 			<div className='max-w-7xl mx-auto px-4 md:px-6 py-12'>
 				{isLoading ? (
-					<div className='min-h-screen container px-4 md:px-6 py-12'>
-						<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-							{[...Array(9)].map((_, i) => (
-								<Card key={i} className='animate-pulse'>
-									<div className='h-48 bg-muted rounded-t-lg' />
-									<CardContent className='p-4'>
-										<div className='h-4 bg-muted rounded w-3/4 mb-4' />
-										<div className='h-4 bg-muted rounded w-1/2' />
-									</CardContent>
-								</Card>
-							))}
-						</div>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+						{[...Array(9)].map((_, i) => (
+							<Card key={i} className='animate-pulse'>
+								<div className='h-48 bg-muted rounded-t-lg' />
+								<CardContent className='p-4'>
+									<div className='h-4 bg-muted rounded w-3/4 mb-4' />
+									<div className='h-4 bg-muted rounded w-1/2' />
+								</CardContent>
+							</Card>
+						))}
 					</div>
 				) : articles.length === 0 ? (
 					<div className='text-center py-12'>
@@ -170,7 +206,10 @@ const AllArticles = () => {
 						<Button
 							variant='outline'
 							size='icon'
-							onClick={() => setPage((p) => Math.max(1, p - 1))}
+							onClick={() => {
+								setPage((p) => Math.max(1, p - 1));
+								refetch();
+							}}
 							disabled={page === 1}>
 							<ChevronLeft className='h-4 w-4' />
 						</Button>
@@ -182,7 +221,10 @@ const AllArticles = () => {
 						<Button
 							variant='outline'
 							size='icon'
-							onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+							onClick={() => {
+								setPage((p) => Math.min(totalPages, p + 1));
+								refetch();
+							}}
 							disabled={page === totalPages}>
 							<ChevronRight className='h-4 w-4' />
 						</Button>

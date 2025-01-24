@@ -79,6 +79,12 @@ const ArticleDetails = () => {
 		mutationFn: async () => {
 			return await axiosSecure.post(`/articles/${id}/view`);
 		},
+		onSuccess: () => {
+			queryClient.setQueryData(['article', id], (old) => ({
+				...old,
+				views: old.views + 1,
+			}));
+		},
 	});
 
 	useEffect(() => {

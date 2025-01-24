@@ -12,6 +12,9 @@ import RegisterPage from '@/pages/RegisterPage';
 import SubscriptionPage from '@/pages/SubsciptionPage';
 import { createBrowserRouter } from 'react-router-dom';
 import EditArticle from '@/pages/EditArticle';
+import PremiumArticles from '@/pages/PremiumArticles';
+import AllUsers from '@/pages/Dashboard/AllUsers';
+import AllArticlesDashboard from '@/pages/Dashboard/AllArticlesDashboard';
 
 export const router = createBrowserRouter([
 	{
@@ -56,6 +59,10 @@ export const router = createBrowserRouter([
 				path: '/edit-article/:id',
 				element: <EditArticle />,
 			},
+			{
+				path: '/premium',
+				element: <PremiumArticles />,
+			},
 		],
 	},
 	{
@@ -64,7 +71,15 @@ export const router = createBrowserRouter([
 		errorElement: <></>,
 		children: [
 			{
-				path: 'add-publisher',
+				path: '/dashboard/users',
+				element: <AllUsers />,
+			},
+			{
+				path: '/dashboard/articles',
+				element: <AllArticlesDashboard />,
+			},
+			{
+				path: '/dashboard/add-publisher',
 				element: <AddPublisher />,
 			},
 		],
