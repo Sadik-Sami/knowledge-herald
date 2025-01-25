@@ -56,7 +56,7 @@ const PremiumArticles = () => {
 	if (!hasSubscription) {
 		return (
 			<div className='min-h-screen bg-background'>
-				<div className='container px-4 md:px-6 py-24 space-y-8'>
+				<div className='container mx-auto px-4 md:px-6 py-24 space-y-8'>
 					<div className='max-w-3xl mx-auto text-center space-y-4'>
 						<Crown className='h-16 w-16 mx-auto text-primary' />
 						<h1 className='text-4xl font-bold tracking-tighter sm:text-5xl'>Premium Content Awaits</h1>
@@ -91,7 +91,7 @@ const PremiumArticles = () => {
 			<section className='relative py-20 overflow-hidden'>
 				<div className='absolute inset-0 bg-gradient-to-r from-primary to-primary/80' />
 				<div className='absolute inset-0 bg-grid-white/10' />
-				<div className='relative container px-4 md:px-6 mx-auto'>
+				<div className='relative container mx-auto px-4 md:px-6'>
 					<div className='flex flex-col items-center text-center space-y-4'>
 						<div className='p-3 rounded-full bg-white/10 backdrop-blur-sm'>
 							<Crown className='h-6 w-6 text-white' />
@@ -106,7 +106,7 @@ const PremiumArticles = () => {
 
 			{/* Filters Section */}
 			<section className='py-12 border-b'>
-				<div className='container px-4 md:px-6 mx-auto'>
+				<div className='container mx-auto px-4 md:px-6'>
 					<div className='max-w-4xl mx-auto space-y-4'>
 						<div className='relative'>
 							<Search className='absolute left-3 top-3 h-4 w-4 text-muted-foreground' />

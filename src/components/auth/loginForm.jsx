@@ -11,6 +11,7 @@ import loginAnimation from '@/assets/login-animation.json';
 import useAuth from '@/hooks/use-AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import useAxiosPublic from '@/hooks/use-AxiosPublic';
+import { NavLink } from 'react-router-dom';
 
 const LoginForm = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -118,7 +119,12 @@ const LoginForm = () => {
 						)}
 					</Button>
 				</form>
-
+				<span className='font-medium text-xs'>
+					Don't Have An Account{' '}
+					<NavLink className='underline' to={'/register'}>
+						register here
+					</NavLink>
+				</span>
 				<div className='relative'>
 					<div className='absolute inset-0 flex items-center'>
 						<div className='w-full border-t'></div>

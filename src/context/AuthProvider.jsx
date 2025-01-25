@@ -105,7 +105,6 @@ const AuthProvider = ({ children }) => {
 						return console.log('Failed to get authorized');
 					}
 					localStorage.setItem('access-token', data.uToken);
-					console.log(currentUser);
 					setUser(currentUser);
 				} else {
 					localStorage.removeItem('access-token');

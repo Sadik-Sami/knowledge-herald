@@ -1,11 +1,13 @@
 # Knowledge Herald
+
 A modern news portal focused on technology articles with premium content and subscription features.
 
 ## 🌟 Live Demo
 
-[Visit TechNews Daily](your-live-link-here)
+[Visit KnowledgeHerald](https://knowledge-herald.web.app/)
 
 ## ✨ Features
+
 - 🔐 User authentication with email and Google
 - 💎 Premium article subscription system
 - ✍️ Article creation and management

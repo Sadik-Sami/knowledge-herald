@@ -47,11 +47,41 @@ const Navbar = () => {
 					<Link to='/' className='flex items-center gap-2'>
 						<span className='text-xl font-bold'>Knowledge Herald</span>
 					</Link>
-
-					<Button variant='ghost' size='icon' className='md:hidden' onClick={() => setIsOpen(true)}>
-						<Menu className='h-5 w-5' />
-						<span className='sr-only'>Toggle menu</span>
-					</Button>
+					<div className='flex items-center gap-2'>
+						{user && (
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant='ghost' size='icon' className='relative h-8 w-8'>
+										{user.photoURL ? (
+											<img
+												src={user.photoURL || '/placeholder.svg'}
+												alt={user.displayName}
+												className='h-8 w-8 rounded-full object-cover'
+											/>
+										) : (
+											<User className='h-5 w-5' />
+										)}
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent align='end' className='w-56'>
+									<div className='flex items-center justify-start gap-2 p-2'>
+										<div className='flex flex-col space-y-1 leading-none'>
+											{user.displayName && <p className='font-medium'>{user.displayName}</p>}
+											<p className='text-sm text-muted-foreground'>{user.email}</p>
+										</div>
+									</div>
+									<DropdownMenuItem asChild>
+										<Link to='/profile'>Profile</Link>
+									</DropdownMenuItem>
+									<DropdownMenuItem onClick={signOut}>Log out</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						)}
+						<Button variant='ghost' size='icon' className='md:hidden' onClick={() => setIsOpen(true)}>
+							<Menu className='h-5 w-5' />
+							<span className='sr-only'>Toggle menu</span>
+						</Button>
+					</div>
 
 					{/* Desktop Navigation */}
 					<nav className='hidden md:flex md:flex-1 md:items-center md:justify-between'>
@@ -133,7 +163,7 @@ const Navbar = () => {
 						className='fixed inset-0 z-50 bg-background'>
 						<div className='flex h-14 items-center justify-between px-4 border-b'>
 							<Link to='/' className='flex items-center gap-2' onClick={() => setIsOpen(false)}>
-								<span className='text-xl font-bold'>TechNews</span>
+								<span className='text-xl font-bold'>Knowledge Harald</span>
 							</Link>
 							<Button variant='ghost' size='icon' onClick={() => setIsOpen(false)}>
 								<X className='h-5 w-5' />
@@ -173,12 +203,12 @@ const Navbar = () => {
 								)}
 							</div>
 							<div className='mt-6 flex items-center justify-between'>
-								<ThemeToggle className={'bg-secondary'} />
-								{user && (
+								<ThemeToggle className={'bg-primary dark:bg-black'} />
+								{/* {user && (
 									<Button variant='outline' onClick={signOut}>
 										Log out
 									</Button>
-								)}
+								)} */}
 							</div>
 						</nav>
 					</motion.div>
