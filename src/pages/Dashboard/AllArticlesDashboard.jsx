@@ -27,22 +27,23 @@ import { useToast } from '@/hooks/use-toast';
 import useArticles from '@/hooks/use-articles';
 import usePublishers from '@/hooks/use-publishers';
 import useAxiosSecure from '@/hooks/use-AxiosSecure';
-import { ChevronLeft, ChevronRight, MoreHorizontal, Search, Star, Trash2 } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ChevronLeft, ChevronRight, MoreHorizontal, Search, Star, Trash2, Loader2 } from 'lucide-react';
 import Lottie from 'lottie-react';
 import noDataAnimation from '@/assets/no-data.json';
-import Pagination from '@/components/Pagination';
 
 const AllArticlesDashboard = () => {
 	const { confirm, ConfirmationDialog } = useConfirmation();
 	const { addToast } = useToast();
 	const [page, setPage] = useState(1);
+	const queryClient = useQueryClient();
 	const axiosSecure = useAxiosSecure();
 	const searchTimeout = useRef(null);
 	const [limit, setLimit] = useState(5);
 	const [search, setSearch] = useState('');
 	const [selectedPublisher, setSelectedPublisher] = useState(null);
 	const [selectedTags, setSelectedTags] = useState([]);
-	const [declineDialog, setDeclineDialog] = useState({ open: false, id: null });
+	const [declineDialog, setDeclineDialog] = useState({ open: false, id: null, article: null });
 	const [declineReason, setDeclineReason] = useState('');
 
 	const { data: publishers = [] } = usePublishers();
@@ -52,7 +53,42 @@ const AllArticlesDashboard = () => {
 		refetch,
 	} = useArticles(page, limit, search, selectedPublisher, selectedTags, ['approved', 'pending', 'declined']);
 
-	const { data: articles = [], totalPages = 1, total } = articlesData;
+	const { data: articles = [], totalPages = 1 } = articlesData;
+
+	// Decline mutation
+	const declineMutation = useMutation({
+		mutationFn: async ({ id, reason }) => {
+			const response = await axiosSecure.patch(`/admin/articles/${id}`, {
+				status: 'declined',
+				declined_reason: reason,
+			});
+			return response.data;
+		},
+		onSuccess: () => {
+			addToast('Article declined successfully', 'success');
+			queryClient.invalidateQueries(['articles']); // Invalidate articles query
+			handleCloseDeclineDialog();
+		},
+		onError: (error) => {
+			addToast(error.response?.data?.message || 'Failed to decline article', 'error');
+		},
+	});
+
+	// Handle decline dialog close
+	const handleCloseDeclineDialog = () => {
+		setDeclineDialog({ open: false, id: null, article: null });
+		setDeclineReason('');
+	};
+
+	// Handle decline submission
+	const handleDecline = async () => {
+		if (!declineReason.trim() || !declineDialog.id) return;
+
+		declineMutation.mutate({
+			id: declineDialog.id,
+			reason: declineReason.trim(),
+		});
+	};
 
 	// Handle search with debounce
 	const handleSearch = (value) => {
@@ -65,11 +101,13 @@ const AllArticlesDashboard = () => {
 			setPage(1);
 		}, 300);
 	};
-
+	useEffect(() => {
+		refetch();
+	}, []);
 	// Reset page when filters change
 	useEffect(() => {
 		setPage(1);
-	}, [selectedPublisher, selectedTags]);
+	}, [search, limit, selectedPublisher, selectedTags]); //This line was already correct
 
 	// Cleanup timeout
 	useEffect(() => {
@@ -102,24 +140,6 @@ const AllArticlesDashboard = () => {
 
 		if (confirmed) {
 			addToast('Article approved successfully', 'success');
-		}
-	};
-
-	const handleDecline = async () => {
-		try {
-			const response = await axiosSecure.patch(`/admin/articles/${declineDialog.id}`, {
-				status: 'declined',
-				declined_reason: declineReason,
-			});
-
-			if (response.data.success) {
-				setDeclineDialog({ open: false, id: null });
-				setDeclineReason('');
-				refetch();
-				addToast('Article declined successfully', 'success');
-			}
-		} catch (error) {
-			addToast(error.response?.data?.message || 'Failed to decline article', 'error');
 		}
 	};
 
@@ -191,10 +211,7 @@ const AllArticlesDashboard = () => {
 							label: pub.name,
 						}))}
 						value={selectedPublisher}
-						onChange={(value) => {
-							setSelectedPublisher(value);
-							refetch();
-						}}
+						onChange={(value) => setSelectedPublisher(value)}
 						isClearable
 						className='w-full text-black/70'
 					/>
@@ -204,10 +221,7 @@ const AllArticlesDashboard = () => {
 						placeholder='Filter by tags'
 						options={techTags}
 						value={selectedTags}
-						onChange={(value) => {
-							setSelectedTags(value);
-							refetch();
-						}}
+						onChange={setSelectedTags}
 						className='w-full text-black/75'
 					/>
 
@@ -225,6 +239,7 @@ const AllArticlesDashboard = () => {
 					</UISelect>
 				</div>
 			</div>
+
 			<div className='rounded-md border'>
 				<Table>
 					<TableHeader>
@@ -236,118 +251,6 @@ const AllArticlesDashboard = () => {
 							<TableHead className='text-right'>Actions</TableHead>
 						</TableRow>
 					</TableHeader>
-					{/* <TableBody>
-						{isLoading ? (
-							Array.from({ length: limit }).map((_, i) => (
-								<TableRow key={i}>
-									<TableCell>
-										<div className='h-4 w-48 bg-muted animate-pulse rounded' />
-									</TableCell>
-									<TableCell>
-										<div className='flex items-center gap-4'>
-											<div className='h-10 w-10 rounded-full bg-muted animate-pulse' />
-											<div className='space-y-2'>
-												<div className='h-4 w-32 bg-muted animate-pulse rounded' />
-												<div className='h-3 w-40 bg-muted animate-pulse rounded' />
-												<div className='h-3 w-40 bg-muted animate-pulse rounded' />
-											</div>
-										</div>
-									</TableCell>
-									<TableCell>
-										<div className='h-4 w-32 bg-muted animate-pulse rounded' />
-									</TableCell>
-									<TableCell>
-										<div className='h-6 w-20 bg-muted animate-pulse rounded' />
-									</TableCell>
-									<TableCell>
-										<div className='h-8 w-8 bg-muted animate-pulse rounded ml-auto' />
-									</TableCell>
-								</TableRow>
-							))
-						) : articles.length > 0 ? (
-							articles?.map((article) => (
-								<TableRow key={article._id}>
-									<TableCell className='font-medium'>{article.title}</TableCell>
-									<TableCell>
-										<div className='flex items-center gap-4'>
-											<img
-												src={article.authorImage || '/placeholder.svg'}
-												alt={article.authorName}
-												className='h-10 w-10 rounded-full object-cover'
-											/>
-											<div>
-												<div className='font-medium'>{article.authorName.split(' ')[0]}</div>
-												<div className='text-sm text-muted-foreground'>{article.authorEmail}</div>
-												<div className='text-sm text-muted-foreground'>
-													{new Date(article.createdAt).toLocaleDateString()}
-												</div>
-											</div>
-										</div>
-									</TableCell>
-									<TableCell>{article.publisherName}</TableCell>
-									<TableCell>
-										<span
-											className={cn(
-												'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
-												article.status === 'pending' && 'bg-yellow-100 text-yellow-800',
-												article.status === 'approved' && 'bg-green-100 text-green-800',
-												article.status === 'declined' && 'bg-red-100 text-red-800'
-											)}>
-											{article.status}
-										</span>
-									</TableCell>
-									<TableCell className='text-right'>
-										<DropdownMenu>
-											<DropdownMenuTrigger asChild>
-												<Button variant='ghost' size='icon'>
-													<MoreHorizontal className='h-4 w-4' />
-												</Button>
-											</DropdownMenuTrigger>
-											<DropdownMenuContent align='end'>
-												{article.status === 'pending' && (
-													<>
-														<DropdownMenuItem onClick={() => handleApprove(article._id)}>Approve</DropdownMenuItem>
-														<DropdownMenuItem
-															onClick={() =>
-																setDeclineDialog({
-																	open: true,
-																	id: article._id,
-																})
-															}>
-															Decline
-														</DropdownMenuItem>
-													</>
-												)}
-												{(article.status === 'approved' || article.status === 'declined') && (
-													<DropdownMenuItem onClick={() => handleDelete(article._id)} className='text-red-600'>
-														<Trash2 className='mr-2 h-4 w-4' />
-														Delete
-													</DropdownMenuItem>
-												)}
-												{article.status === 'approved' && !article.isPremium && (
-													<DropdownMenuItem onClick={() => handleMakePremium(article._id)}>
-														<Star className='mr-2 h-4 w-4' />
-														Make Premium
-													</DropdownMenuItem>
-												)}
-											</DropdownMenuContent>
-										</DropdownMenu>
-									</TableCell>
-								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell>
-									<motion.div
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										className='flex items-center justify-center'>
-										<Lottie animationData={noDataAnimation} loop={true} className='w-full max-w-md' />
-									</motion.div>
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody> */}
 					<TableBody>
 						{isLoading ? (
 							Array.from({ length: limit }).map((_, i) => (
@@ -360,7 +263,6 @@ const AllArticlesDashboard = () => {
 											<div className='h-10 w-10 rounded-full bg-muted animate-pulse' />
 											<div className='space-y-2'>
 												<div className='h-4 w-32 bg-muted animate-pulse rounded' />
-												<div className='h-3 w-40 bg-muted animate-pulse rounded' />
 												<div className='h-3 w-40 bg-muted animate-pulse rounded' />
 											</div>
 										</div>
@@ -379,7 +281,9 @@ const AllArticlesDashboard = () => {
 						) : articles.length > 0 ? (
 							articles.map((article) => (
 								<TableRow key={article._id}>
-									<TableCell className='font-medium'>{article.title}</TableCell>
+									<TableCell className='font-medium max-w-[300px]'>
+										<div className='truncate'>{article.title}</div>
+									</TableCell>
 									<TableCell>
 										<div className='flex items-center gap-4'>
 											<img
@@ -388,7 +292,7 @@ const AllArticlesDashboard = () => {
 												className='h-10 w-10 rounded-full object-cover'
 											/>
 											<div>
-												<div className='font-medium'>{article.authorName.split(' ')[0]}</div>
+												<div className='font-medium'>{article.authorName}</div>
 												<div className='text-sm text-muted-foreground'>{article.authorEmail}</div>
 												<div className='text-sm text-muted-foreground'>
 													{new Date(article.createdAt).toLocaleDateString()}
@@ -424,13 +328,14 @@ const AllArticlesDashboard = () => {
 																setDeclineDialog({
 																	open: true,
 																	id: article._id,
+																	article: article,
 																})
 															}>
 															Decline
 														</DropdownMenuItem>
 													</>
 												)}
-												{(article.status === 'approved' || article.status === 'declined') && (
+												{article.status !== 'pending' && (
 													<DropdownMenuItem onClick={() => handleDelete(article._id)} className='text-red-600'>
 														<Trash2 className='mr-2 h-4 w-4' />
 														Delete
@@ -448,31 +353,29 @@ const AllArticlesDashboard = () => {
 								</TableRow>
 							))
 						) : (
-							<tr>
-								<td colSpan={5}>
+							<TableRow>
+								<TableCell colSpan={5}>
 									<motion.div
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										className='flex items-center justify-center p-6'>
-										<Lottie animationData={noDataAnimation} loop={true} className='w-[200px] max-w-md' />
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										className='flex flex-col items-center justify-center p-6'>
+										<Lottie animationData={noDataAnimation} loop={true} className='w-[200px]' />
+										<p className='text-muted-foreground mt-4'>No articles found</p>
 									</motion.div>
-								</td>
-							</tr>
+								</TableCell>
+							</TableRow>
 						)}
 					</TableBody>
 				</Table>
 			</div>
 
-			{/* Pagination Component */}
+			{/* Pagination */}
 			{totalPages > 1 && (
 				<div className='flex justify-center items-center gap-2 mt-8'>
 					<Button
 						variant='outline'
 						size='icon'
-						onClick={() => {
-							setPage((p) => Math.max(1, p - 1));
-							refetch();
-						}}
+						onClick={() => setPage((p) => Math.max(1, p - 1))}
 						disabled={page === 1}>
 						<ChevronLeft className='h-4 w-4' />
 					</Button>
@@ -484,10 +387,7 @@ const AllArticlesDashboard = () => {
 					<Button
 						variant='outline'
 						size='icon'
-						onClick={() => {
-							setPage((p) => Math.min(totalPages, p + 1));
-							refetch();
-						}}
+						onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
 						disabled={page === totalPages}>
 						<ChevronRight className='h-4 w-4' />
 					</Button>
@@ -497,26 +397,46 @@ const AllArticlesDashboard = () => {
 			{/* Decline Dialog */}
 			<Dialog
 				open={declineDialog.open}
-				onOpenChange={(open) => {
-					setDeclineDialog({ open, id: null });
-					setDeclineReason('');
-				}}>
+				onOpenChange={(open) => !declineMutation.isLoading && !open && handleCloseDeclineDialog()}>
 				<DialogContent>
 					<DialogHeader>
 						<DialogTitle>Decline Article</DialogTitle>
-						<DialogDescription>Please provide a reason for declining this article.</DialogDescription>
+						<DialogDescription>
+							{declineDialog.article && (
+								<span className='text-muted-foreground'>
+									Declining article: <span className='font-medium text-foreground'>{declineDialog.article.title}</span>
+								</span>
+							)}
+						</DialogDescription>
 					</DialogHeader>
-					<Textarea
-						placeholder='Enter reason for declining...'
-						value={declineReason}
-						onChange={(e) => setDeclineReason(e.target.value)}
-					/>
+					<div className='space-y-4 py-4'>
+						<div className='space-y-2'>
+							<label htmlFor='reason' className='text-sm font-medium'>
+								Reason for declining
+							</label>
+							<Textarea
+								id='reason'
+								placeholder='Please provide a reason for declining this article...'
+								value={declineReason}
+								onChange={(e) => setDeclineReason(e.target.value)}
+								disabled={declineMutation.isLoading}
+								className='min-h-[100px]'
+							/>
+						</div>
+					</div>
 					<DialogFooter>
-						<Button type='button' variant='outline' onClick={() => setDeclineDialog({ open: false, id: null })}>
+						<Button variant='outline' onClick={handleCloseDeclineDialog} disabled={declineMutation.isLoading}>
 							Cancel
 						</Button>
-						<Button type='submit' disabled={!declineReason} onClick={handleDecline}>
-							Submit
+						<Button onClick={handleDecline} disabled={!declineReason.trim() || declineMutation.isLoading}>
+							{declineMutation.isLoading ? (
+								<>
+									<Loader2 className='mr-2 h-4 w-4 animate-spin' />
+									Declining...
+								</>
+							) : (
+								'Decline Article'
+							)}
 						</Button>
 					</DialogFooter>
 				</DialogContent>

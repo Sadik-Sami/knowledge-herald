@@ -30,6 +30,7 @@ const Navbar = () => {
 		{ title: 'My Articles', href: '/my-articles', protected: true },
 		{ title: 'Premium Articles', href: '/premium', protected: true, requiresSub: true }, // requires sub to true when sub is available
 		{ title: 'Dashboard', href: '/dashboard', protected: true, adminOnly: true }, //change adminOnly to true when admin checking is immplemented
+		{ title: 'About Us', href: '/about' },
 	];
 
 	const filteredItems = navItems.filter((item) => {
@@ -44,7 +45,7 @@ const Navbar = () => {
 			<div className='flex h-14 items-center px-4 md:px-6'>
 				<div className='flex w-full items-center justify-between md:justify-start md:gap-6'>
 					<Link to='/' className='flex items-center gap-2'>
-						<span className='text-xl font-bold'>TechNews</span>
+						<span className='text-xl font-bold'>Knowledge Herald</span>
 					</Link>
 
 					<Button variant='ghost' size='icon' className='md:hidden' onClick={() => setIsOpen(true)}>

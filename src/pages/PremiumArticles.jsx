@@ -26,6 +26,7 @@ const PremiumArticles = () => {
 	// Fetch premium articles
 	const {
 		data: articlesData = {},
+		refetch: refetchPremium,
 		isLoading,
 		isError,
 		error,
@@ -49,6 +50,7 @@ const PremiumArticles = () => {
 	const { data: articles = [], totalPages = 1 } = articlesData;
 	useEffect(() => {
 		refetch();
+		refetchPremium();
 	}, []);
 	// If user doesn't have subscription
 	if (!hasSubscription) {

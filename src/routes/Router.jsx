@@ -18,12 +18,15 @@ import AllArticlesDashboard from '@/pages/Dashboard/AllArticlesDashboard';
 import Statistics from '@/pages/Dashboard/Statistics';
 import PrivateRoutes from './PrivateRoutes';
 import AdminRoutes from './AdminRoutes';
+import MyProfile from '@/pages/MyProfile';
+import AboutUs from '@/pages/AboutUs';
+import Error from '@/pages/Error';
 
 export const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <UserLayout />,
-		errorElement: <></>,
+		errorElement: <Error />,
 		children: [
 			{
 				path: '/',
@@ -34,6 +37,14 @@ export const router = createBrowserRouter([
 				element: <LoginPage />,
 			},
 			{ path: '/register', element: <RegisterPage /> },
+			{
+				path: '/profile',
+				element: <MyProfile />,
+			},
+			{
+				path: '/about',
+				element: <AboutUs />,
+			},
 			{
 				path: '/subscription',
 				element: (
@@ -91,7 +102,7 @@ export const router = createBrowserRouter([
 	{
 		path: '/dashboard',
 		element: <AdminLayout />,
-		errorElement: <></>,
+		errorElement: <Error />,
 		children: [
 			{
 				path: '/dashboard',

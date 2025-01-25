@@ -23,7 +23,11 @@ const MyArticles = () => {
 	const [isReasonModalOpen, setIsReasonModalOpen] = useState(false);
 
 	// Fetch user's articles
-	const { data: articlesData = {}, isLoading } = useQuery({
+	const {
+		data: articlesData = {},
+		isLoading,
+		refetch,
+	} = useQuery({
 		queryKey: ['my-articles', user?.email, page],
 		queryFn: async () => {
 			const { data } = await axiosSecure.get(`/articles/my-articles/${user.email}?page=${page}&limit=10`);
