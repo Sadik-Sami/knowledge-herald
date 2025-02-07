@@ -1,5 +1,3 @@
-Here's your **perfected README** with all the new details, maintaining clarity and a professional structure:  
-
 ---
 
 # **Knowledge Herald**  
@@ -160,5 +158,3 @@ This project is licensed under the **MIT License**.
 ---
 
 ### 🎉 **Now You're Ready to Explore Knowledge Herald! 🚀**  
-
-Let me know if you want any refinements! 😊
