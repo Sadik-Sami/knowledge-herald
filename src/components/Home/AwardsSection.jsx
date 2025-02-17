@@ -32,7 +32,7 @@ const awards = [
 const AwardsSection = () => {
 	return (
 		<section className='py-20'>
-			<div className='container px-4 md:px-6'>
+			<div className='container mx-auto px-4 md:px-6'>
 				<div className='text-center max-w-3xl mx-auto mb-12'>
 					<div className='flex items-center justify-center mb-4'>
 						<Award className='h-8 w-8 text-primary' />
