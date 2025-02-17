@@ -31,6 +31,7 @@ const Navbar = () => {
 		{ title: 'Premium Articles', href: '/premium', protected: true, requiresSub: true }, // requires sub to true when sub is available
 		{ title: 'Dashboard', href: '/dashboard', protected: true, adminOnly: true }, //change adminOnly to true when admin checking is immplemented
 		{ title: 'About Us', href: '/about' },
+		{ title: 'Contact Us', href: '/contact' },
 	];
 
 	const filteredItems = navItems.filter((item) => {
@@ -47,7 +48,7 @@ const Navbar = () => {
 					<Link to='/' className='flex items-center gap-2'>
 						<span className='text-xl font-bold'>Knowledge Herald</span>
 					</Link>
-					<div className='flex items-center gap-2'>
+					<div className='flex items-center gap-2 lg:hidden'>
 						{user && (
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>

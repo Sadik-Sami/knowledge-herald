@@ -1,4 +1,5 @@
 import CategorySection from '@/components/Home/CategorySection';
+import FAQSection from '@/components/Home/FAQSection';
 import FeaturedPublishers from '@/components/Home/FeaturedPublisher';
 import Hero from '@/components/Home/Hero';
 import PlansSection from '@/components/Home/PlansSection';
@@ -18,6 +19,7 @@ const Home = () => {
 			<StatsSection />
 			<TestimonialsSection />
 			<FeaturedPublishers />
+			<FAQSection />
 			<SubscriptionAd />
 		</div>
 	);

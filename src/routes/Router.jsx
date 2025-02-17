@@ -21,6 +21,7 @@ import AdminRoutes from './AdminRoutes';
 import MyProfile from '@/pages/MyProfile';
 import AboutUs from '@/pages/AboutUs';
 import Error from '@/pages/Error';
+import ContactUs from '../pages/ContactUs';
 
 export const router = createBrowserRouter([
 	{
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/profile',
 				element: <MyProfile />,
+			},
+			{
+				path: '/contact',
+				element: <ContactUs />,
 			},
 			{
 				path: '/about',
