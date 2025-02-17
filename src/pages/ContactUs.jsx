@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { MessageSquare, Loader2 } from 'lucide-react';
+import { MessageSquare, Loader2, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import useAxiosSecure from '@/hooks/use-AxiosSecure';
 
@@ -134,7 +134,6 @@ const ContactUs = () => {
 								</CardContent>
 							</Card>
 						</motion.div>
-
 						{/* Contact Information */}
 						<motion.div
 							initial={{ opacity: 0, x: 20 }}
@@ -142,7 +141,96 @@ const ContactUs = () => {
 							transition={{ duration: 0.5 }}
 							viewport={{ once: true }}
 							className='space-y-8'>
-							{/* Contact Information content remains the same */}
+							<div>
+								<h3 className='text-2xl font-bold tracking-tight mb-4'>Contact Information</h3>
+								<div className='space-y-4'>
+									<div className='flex items-center gap-4'>
+										<div className='h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center'>
+											<Mail className='h-5 w-5 text-primary' />
+										</div>
+										<div>
+											<p className='font-medium'>Email</p>
+											<a href='mailto:contact@technews.com' className='text-muted-foreground hover:text-primary'>
+												contact@technews.com
+											</a>
+										</div>
+									</div>
+
+									<div className='flex items-center gap-4'>
+										<div className='h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center'>
+											<Phone className='h-5 w-5 text-primary' />
+										</div>
+										<div>
+											<p className='font-medium'>Phone</p>
+											<a href='tel:+15551234567' className='text-muted-foreground hover:text-primary'>
+												+1 (555) 123-4567
+											</a>
+										</div>
+									</div>
+
+									<div className='flex items-center gap-4'>
+										<div className='h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center'>
+											<MapPin className='h-5 w-5 text-primary' />
+										</div>
+										<div>
+											<p className='font-medium'>Address</p>
+											<address className='text-muted-foreground not-italic'>
+												123 Tech Street, Silicon Valley
+												<br />
+												CA 94025, United States
+											</address>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<h3 className='text-2xl font-bold tracking-tight mb-4'>Follow Us</h3>
+								<div className='flex gap-4'>
+									<Button variant='outline' size='icon' asChild>
+										<a href='https://facebook.com/technews' target='_blank' rel='noopener noreferrer'>
+											<Facebook className='h-5 w-5' />
+											<span className='sr-only'>Facebook</span>
+										</a>
+									</Button>
+									<Button variant='outline' size='icon' asChild>
+										<a href='https://twitter.com/technews' target='_blank' rel='noopener noreferrer'>
+											<Twitter className='h-5 w-5' />
+											<span className='sr-only'>Twitter</span>
+										</a>
+									</Button>
+									<Button variant='outline' size='icon' asChild>
+										<a href='https://instagram.com/technews' target='_blank' rel='noopener noreferrer'>
+											<Instagram className='h-5 w-5' />
+											<span className='sr-only'>Instagram</span>
+										</a>
+									</Button>
+									<Button variant='outline' size='icon' asChild>
+										<a href='https://linkedin.com/company/technews' target='_blank' rel='noopener noreferrer'>
+											<Linkedin className='h-5 w-5' />
+											<span className='sr-only'>LinkedIn</span>
+										</a>
+									</Button>
+								</div>
+							</div>
+
+							<div>
+								<h3 className='text-2xl font-bold tracking-tight mb-4'>Office Hours</h3>
+								<div className='space-y-2'>
+									<div className='flex justify-between'>
+										<span className='text-muted-foreground'>Monday - Friday</span>
+										<span>9:00 AM - 6:00 PM</span>
+									</div>
+									<div className='flex justify-between'>
+										<span className='text-muted-foreground'>Saturday</span>
+										<span>10:00 AM - 4:00 PM</span>
+									</div>
+									<div className='flex justify-between'>
+										<span className='text-muted-foreground'>Sunday</span>
+										<span>Closed</span>
+									</div>
+								</div>
+							</div>
 						</motion.div>
 					</div>
 				</div>
