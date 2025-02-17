@@ -1,3 +1,4 @@
+import AwardsSection from '@/components/Home/AwardsSection';
 import CategorySection from '@/components/Home/CategorySection';
 import FAQSection from '@/components/Home/FAQSection';
 import FeaturedPublishers from '@/components/Home/FeaturedPublisher';
@@ -22,6 +23,7 @@ const Home = () => {
 			<FeaturedPublishers />
 			<FAQSection />
 			<PartnersSection />
+			<AwardsSection />
 			<SubscriptionAd />
 		</div>
 	);
