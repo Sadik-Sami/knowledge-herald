@@ -150,8 +150,8 @@ const ContactUs = () => {
 										</div>
 										<div>
 											<p className='font-medium'>Email</p>
-											<a href='mailto:contact@technews.com' className='text-muted-foreground hover:text-primary'>
-												contact@technews.com
+											<a href='mailto:contact@herald.com' className='text-muted-foreground hover:text-primary'>
+												contact@herald.com
 											</a>
 										</div>
 									</div>

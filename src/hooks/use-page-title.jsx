@@ -3,13 +3,13 @@ import { Helmet } from 'react-helmet-async';
 
 export function usePageTitle(title) {
 	useEffect(() => {
-		document.title = `${title} | TechNews`;
+		document.title = `${title} | Herald`;
 	}, [title]);
 
 	return (
 		<Helmet>
-			<title>{title} | TechNews</title>
-			<meta name='description' content={`TechNews - ${title}`} />
+			<title>{title} | Herald</title>
+			<meta name='description' content={`Herald - ${title}`} />
 		</Helmet>
 	);
 }

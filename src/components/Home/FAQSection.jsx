@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
+import Lottie from 'lottie-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HelpCircle } from 'lucide-react';
+import faqAnimation from '@/assets/faq-animation.json'; // You'll need to add this JSON file
 
 const faqs = [
 	{
-		question: 'What is TechNews Daily?',
+		question: 'What is Knowledge Herald?',
 		answer:
-			'TechNews Daily is your premier source for technology news, insights, and analysis. We provide comprehensive coverage of the latest developments in tech, featuring both free and premium content from expert contributors.',
+			'Knowledge Herald is your premier source for technology news, insights, and analysis. We provide comprehensive coverage of the latest developments in tech, featuring both free and premium content from expert contributors.',
 	},
 	{
 		question: 'How does the premium subscription work?',
@@ -43,9 +45,9 @@ const FAQSection = () => {
 					<p className='text-muted-foreground'>Find answers to common questions about our platform and services</p>
 				</div>
 
-				<div className='max-w-3xl mx-auto'>
+				<div className='grid md:grid-cols-2 gap-8 items-center'>
 					<Card>
-						<CardContent className='p-6'>
+						<CardContent className='p-8'>
 							<Accordion type='single' collapsible className='w-full'>
 								{faqs.map((faq, index) => (
 									<motion.div
@@ -63,6 +65,9 @@ const FAQSection = () => {
 							</Accordion>
 						</CardContent>
 					</Card>
+					<div className='hidden md:block'>
+						<Lottie animationData={faqAnimation} loop={true} className='w-full max-w-md mx-auto' />
+					</div>
 				</div>
 			</div>
 		</section>

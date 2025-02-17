@@ -5,7 +5,6 @@ import FeaturedPublishers from '@/components/Home/FeaturedPublisher';
 import Hero from '@/components/Home/Hero';
 import PartnersSection from '@/components/Home/PartnersSection';
 import PlansSection from '@/components/Home/PlansSection';
-import ResourcesSection from '@/components/Home/ResourcesSection';
 import StatsSection from '@/components/Home/StatsSection';
 import SubscriptionAd from '@/components/Home/SubscriptionAd';
 import TestimonialsSection from '@/components/Home/TestimonialsSection';
@@ -22,10 +21,9 @@ const Home = () => {
 			<StatsSection />
 			<TestimonialsSection />
 			<FeaturedPublishers />
-			<FAQSection />
-			<PartnersSection />
 			<AwardsSection />
-			<ResourcesSection />
+			<PartnersSection />
+			<FAQSection />
 			<SubscriptionAd />
 		</div>
 	);

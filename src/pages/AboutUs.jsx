@@ -85,7 +85,7 @@ const AboutUs = () => {
 							viewport={{ once: true }}>
 							<h2 className='text-3xl font-bold tracking-tight mb-4'>Our Mission</h2>
 							<p className='text-muted-foreground mb-4'>
-								At TechNews Daily, we believe in making technology news accessible, understandable, and relevant to
+								At Knowledge Herald, we believe in making technology news accessible, understandable, and relevant to
 								everyone. Our mission is to bridge the gap between complex technological advancements and our readers'
 								understanding.
 							</p>
@@ -120,7 +120,7 @@ const AboutUs = () => {
 				<div className='container mx-auto px-4 md:px-6'>
 					<div className='text-center max-w-3xl mx-auto mb-12'>
 						<h2 className='text-3xl font-bold tracking-tight mb-4'>Why Choose Us</h2>
-						<p className='text-muted-foreground'>Discover what makes TechNews Daily stand out from the crowd</p>
+						<p className='text-muted-foreground'>Discover what makes Knowledge Herald stand out from the crowd</p>
 					</div>
 
 					<div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
@@ -149,7 +149,7 @@ const AboutUs = () => {
 				<div className='container mx-auto px-4 md:px-6'>
 					<div className='text-center max-w-3xl mx-auto mb-12'>
 						<h2 className='text-3xl font-bold tracking-tight mb-4'>Meet Our Team</h2>
-						<p className='text-muted-foreground'>The people behind TechNews Daily</p>
+						<p className='text-muted-foreground'>The people behind Knowledge Herald</p>
 					</div>
 
 					<div className='grid md:grid-cols-3 gap-8'>

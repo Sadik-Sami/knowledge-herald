@@ -1,6 +1,7 @@
 import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import TermsModal from './modals/TermsModal';
 
 const Footer = () => {
 	return (
@@ -9,7 +10,7 @@ const Footer = () => {
 				<div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
 					{/* About Section */}
 					<div className='space-y-4'>
-						<h3 className='text-lg font-semibold'>TechNews Daily</h3>
+						<h3 className='text-lg font-semibold'>Knowledge Herald</h3>
 						<p className='text-sm text-muted-foreground'>
 							Your trusted source for the latest technology news, insights, and innovations.
 						</p>
@@ -49,9 +50,11 @@ const Footer = () => {
 								</a>
 							</li>
 							<li>
-								<a href='/terms' className='text-sm text-muted-foreground hover:text-primary transition'>
-									Terms of Service
-								</a>
+								<TermsModal>
+									<button className='text-muted-foreground hover:text-foreground transition-colors'>
+										Terms of Service
+									</button>
+								</TermsModal>
 							</li>
 						</ul>
 					</div>
@@ -62,7 +65,7 @@ const Footer = () => {
 						<ul className='space-y-2'>
 							<li className='flex items-center space-x-2 text-sm text-muted-foreground'>
 								<Mail className='h-4 w-4' />
-								<span>contact@technews.com</span>
+								<span>contact@herald.com</span>
 							</li>
 							<li className='flex items-center space-x-2 text-sm text-muted-foreground'>
 								<Phone className='h-4 w-4' />
@@ -87,7 +90,7 @@ const Footer = () => {
 				</div>
 
 				<div className='mt-16 pt-8 border-t text-center text-sm text-muted-foreground'>
-					<p>&copy; {new Date().getFullYear()} TechNews Daily. All rights reserved.</p>
+					<p>&copy; {new Date().getFullYear()} Knowledge herald. All rights reserved.</p>
 				</div>
 			</div>
 		</footer>
