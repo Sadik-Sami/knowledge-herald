@@ -8,12 +8,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MessageSquare, Loader2, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import useAxiosSecure from '@/hooks/use-AxiosSecure';
+import useAxiosPublic from '@/hooks/use-AxiosPublic';
 
 const ContactUs = () => {
 	const [loading, setLoading] = useState(false);
 	const { addToast } = useToast();
-	const axiosSecure = useAxiosSecure();
+	const axiosPublic = useAxiosPublic();
 
 	const {
 		register,
@@ -25,11 +25,11 @@ const ContactUs = () => {
 	const onSubmit = async (data) => {
 		try {
 			setLoading(true);
-			const response = await axiosSecure.post('/contact', data);
+			const response = await axiosPublic.post('/contact', data);
 
 			if (response.data.success) {
 				addToast('Message sent successfully!', 'success');
-				reset(); // Reset form
+				reset();
 			}
 		} catch (error) {
 			addToast(error.response?.data?.message || 'Failed to send message', 'error');
