@@ -22,6 +22,7 @@ import MyProfile from '@/pages/MyProfile';
 import AboutUs from '@/pages/AboutUs';
 import Error from '@/pages/Error';
 import ContactUs from '../pages/ContactUs';
+import UserDashboard from '@/pages/UserDashboard';
 
 export const router = createBrowserRouter([
 	{
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/about',
 				element: <AboutUs />,
+			},
+			{
+				path: 'user-dashboard',
+				element: <UserDashboard />,
 			},
 			{
 				path: '/subscription',

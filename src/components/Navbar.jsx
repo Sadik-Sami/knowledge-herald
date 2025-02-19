@@ -72,7 +72,12 @@ const Navbar = () => {
 										</div>
 									</div>
 									<DropdownMenuItem asChild>
-										<Link to='/profile'>Profile</Link>
+										<Link to='/profile'>Profiles</Link>
+									</DropdownMenuItem>
+									<DropdownMenuItem asChild>
+										<Link to='/user-dashboard'>
+											{user?.displayName ? `${user?.displayName}'s Overview` : 'Overview'}
+										</Link>
 									</DropdownMenuItem>
 									<DropdownMenuItem onClick={signOut}>Log out</DropdownMenuItem>
 								</DropdownMenuContent>
@@ -135,6 +140,11 @@ const Navbar = () => {
 										</div>
 										<DropdownMenuItem asChild>
 											<Link to='/profile'>Profile</Link>
+										</DropdownMenuItem>
+										<DropdownMenuItem asChild>
+											<Link to='/user-dashboard'>
+												{user?.displayName ? `${user?.displayName}'s Overview` : 'Overview'}
+											</Link>
 										</DropdownMenuItem>
 										<DropdownMenuItem onClick={signOut}>Log out</DropdownMenuItem>
 									</DropdownMenuContent>

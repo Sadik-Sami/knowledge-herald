@@ -4,33 +4,33 @@ import { Building2 } from 'lucide-react';
 
 const partners = [
 	{
-		name: 'TechCorp International',
-		logo: '/partners/techcorp.svg',
+		name: 'Tech Radar',
+		logo: 'https://i.ibb.co.com/xfqRq6M/images.jpg',
 		description: 'Global Technology Solutions',
 	},
 	{
-		name: 'InnovateHub',
-		logo: '/partners/innovatehub.svg',
+		name: 'GamersHub',
+		logo: 'https://i.ibb.co.com/gy7Lbjv/460-4604846-wolf-gaming-logo-png.jpg',
 		description: 'Innovation & Research',
 	},
 	{
-		name: 'Digital Dynamics',
-		logo: '/partners/digitaldynamics.svg',
+		name: 'Medium',
+		logo: 'https://i.ibb.co.com/cvJ2Mbx/images.png',
 		description: 'Digital Transformation',
 	},
 	{
 		name: 'Future Systems',
-		logo: '/partners/futuresystems.svg',
+		logo: 'https://i.ibb.co.com/Y21C8Gq/gear-smart-eps-icon-digital-tech-business-logo-free-vector.jpg',
 		description: 'Future Technologies',
 	},
 	{
 		name: 'Tech Ventures',
-		logo: '/partners/techventures.svg',
+		logo: 'https://i.ibb.co.com/BTdVS6y/big-idea.png',
 		description: 'Technology Investment',
 	},
 	{
 		name: 'Smart Solutions',
-		logo: '/partners/smartsolutions.svg',
+		logo: 'https://i.ibb.co.com/VYy2yCPf/png-clipart-logo-technology-digital-restaurant-marketing-for-restaurants-technology-electronics-text.png',
 		description: 'Smart Technology',
 	},
 ];
@@ -59,7 +59,7 @@ const PartnersSection = () => {
 							viewport={{ once: true }}>
 							<Card className='hover:shadow-lg transition-shadow'>
 								<CardContent className='p-6 flex flex-col items-center text-center'>
-									<div className='w-20 h-20 mb-4 flex items-center justify-center'>
+									<div className='w-20 h-20 mb-4 flex items-center justify-center bg-white'>
 										<img
 											src={partner.logo || '/placeholder.svg?height=80&width=80'}
 											alt={partner.name}
