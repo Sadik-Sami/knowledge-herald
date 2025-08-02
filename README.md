@@ -1,160 +1,225 @@
----
+# 📰 Knowledge Herald – Tech News Portal (Frontend)
 
-# **Knowledge Herald**  
+**Knowledge Herald** is a modern tech news platform built with React and the MERN stack, designed to deliver curated tech articles, premium content, and an interactive user dashboard. It includes role-based access, subscription plans, publisher support, and admin analytics.
 
-A modern **technology news portal** offering premium content, user subscriptions, and an intuitive experience for readers, authors, and administrators.  
-
-## 🌍 **Live Demo**  
-[🚀 Visit Knowledge Herald](https://knowledge-herald.web.app/)  
-
----
-
-## ✨ **Features**  
-
-✅ **User Authentication** – Email & Google Sign-In  
-💎 **Premium Subscription System** – Unlock exclusive articles  
-📝 **Article Management** – Create, edit, and publish articles  
-👥 **User Roles** – Admin, Author, and Reader with role-based access  
-📱 **Responsive UI** – Works on mobile, tablet, and desktop  
-🌓 **Dark/Light Mode** – Seamless theme switching  
-🔍 **Advanced Search & Filtering** – Find articles easily  
-⭐ **Article Rating System** – Users can rate and review articles  
-💬 **Comment System** – Engage with the community  
-📊 **Admin Dashboard** – View analytics and user insights  
+🌐 **Live Demo**: [https://knowledge-herald.web.app](https://knowledge-herald.web.app)  
+📸 **Preview Screenshots**:  
+![Home](https://your-image-host.com/homepage-screenshot.png)
+![Dashboard](https://your-image-host.com/dashboard-screenshot.png)
+![Article Details](https://your-image-host.com/article-screenshot.png)
 
 ---
 
-## 🔑 **Demo Credentials**  
+## 📚 Table of Contents
 
-Test the platform with admin access:  
+- [📁 Project Structure](#-project-structure)
+- [🚀 Features](#-features)
+- [🛠 Tech Stack](#-tech-stack)
+- [🧾 Routes Overview](#-routes-overview)
+- [🔧 Setup & Installation](#-setup--installation)
+- [🖌️ UI Libraries](#️-ui-libraries)
+- [🧪 Testing (Optional)](#-testing-optional)
+- [📁 Deployment](#-deployment)
+- [🙌 Contribution](#-contribution)
+- [📜 License](#-license)
+- [📧 Contact](#-contact)
+
+---
+
+## 📁 Project Structure
+
+The project is organized for clarity and scalability using atomic design and React best practices.
+
+```
+
+src/
+├── assets/             # Lottie animations, images
+├── components/         # All shared and page-specific components
+│   ├── Home/           # Hero, FAQ, Trending, Testimonials
+│   ├── auth/           # Login/Register forms
+│   ├── Dashboard/      # Admin/user dashboard widgets
+│   ├── modals/         # Terms of Service and confirmation modals
+│   └── ui/             # Tailwind+Shadcn based styled components
+├── context/            # Auth context using React Context API
+├── data/               # Static sample data like tags
+├── firebase/           # Firebase configuration
+├── hooks/              # Reusable React hooks (auth, axios, subscription)
+├── layout/             # Layout wrappers for dashboard pages
+├── lib/                # Utility functions (form validation, etc.)
+├── pages/              # Page routes (Home, About, ArticleDetails, etc.)
+├── providers/          # Theme provider (light/dark toggle)
+├── routes/             # Protected and role-based route wrappers
+├── App.jsx             # App router and layout wrapper
+├── main.jsx            # ReactDOM entry point
+├── index.css           # Global styles with Tailwind
+
+````
+
+---
+
+## 🚀 Features
+
+### 🔓 Public Users
+- Beautiful homepage with featured articles, publishers, and testimonials
+- Browse all articles and read article details
+- Responsive layout across all devices
+- Scroll animation, Lottie icons, and lazy-loaded images
+
+### 🔐 Authentication
+- Firebase email/password auth
+- Persistent login using Context API
+- Access control for protected and admin routes
+
+### 💳 Subscription System
+- View and purchase premium plans
+- Protected route access for premium content
+- Payment success landing page
+
+### 🧑‍💼 User Dashboard
+- View your articles
+- Add new articles
+- Edit/Delete your content
+- Access premium articles after subscription
+
+### 🛠 Admin Dashboard
+- Add new publishers
+- View all articles and users
+- Statistics chart (article counts, users, etc.)
+- Manage subscriptions and roles
+
+---
+
+## 🛠 Tech Stack
+
+| Category         | Tech Used                              | Description                                |
+|------------------|-----------------------------------------|--------------------------------------------|
+| Frontend         | React, Vite                             | Fast modern SPA with component structure   |
+| Styling          | Tailwind CSS, Shadcn/ui                 | Utility-first + accessible styled UI       |
+| Authentication   | Firebase                                | Email/password auth                        |
+| State Management | Context API, Custom Hooks               | Clean global state for auth/subscription   |
+| Routing          | React Router DOM                        | Route management with nested layout        |
+| HTTP Requests    | Axios                                   | REST API calls with auth interceptors      |
+| Animation        | Lottie React                            | Engaging animations (login, FAQ, etc.)     |
+| Icons            | Lucide React                            | Consistent icons across the app            |
+
+---
+
+## 🧾 Routes Overview
+
+| Path                          | Description                          |
+|------------------------------|--------------------------------------|
+| `/`                          | Homepage with article highlights     |
+| `/login`, `/register`        | Firebase-powered auth forms          |
+| `/all-articles`              | Full article feed                    |
+| `/article/:id`               | Dynamic article page                 |
+| `/dashboard`                 | Role-based dashboard                 |
+| `/dashboard/my-articles`     | Authored articles list               |
+| `/dashboard/add-article`     | Form to create new post              |
+| `/dashboard/statistics`      | Admin-only analytics page            |
+| `/dashboard/all-users`       | Admin-only user manager              |
+| `/subscription`              | Pricing plans                        |
+| `/payment-success`           | Redirect after successful payment    |
+| `/about`, `/contact`         | Informational pages                  |
+| `*`                          | Custom 404 error page                |
+
+---
+
+## 🔧 Setup & Installation
+
+1. **Clone the project**
+   ```bash
+   git clone https://github.com/yourusername/knowledge-herald-frontend.git
+   cd knowledge-herald-frontend
+````
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Firebase Setup**
+
+   * Add your Firebase config to `src/firebase/firebase.init.js`
+   * Enable Email/Password login in Firebase Console
+
+4. **Create `.env` file**
+
+   ```env
+   VITE_API_BASE_URL=https://your-backend-api.com
+   VITE_FIREBASE_API_KEY=your_firebase_api_key
+   ```
+
+5. **Run the app**
+
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🖌️ UI Libraries
+
+* ✅ [Shadcn/ui](https://ui.shadcn.com) – Styled components
+* ✅ [Tailwind CSS](https://tailwindcss.com) – Custom design system
+* ✅ [Lucide Icons](https://lucide.dev) – Iconography
+* ✅ [Lottie React](https://lottiefiles.com) – JSON animations
+
+---
+
+## 🧪 Testing (Optional)
+
+This project currently does not include automated tests, but you can easily add:
+
+* [Vitest](https://vitest.dev/) for unit testing
+* [React Testing Library](https://testing-library.com/)
+
+---
+
+## 📁 Deployment
+
+This project supports multiple hosting platforms:
+
+| Platform         | Notes                                                    |
+| ---------------- | -------------------------------------------------------- |
+| Firebase Hosting | Already configured via `firebase.json` and `.firebaserc` |
+| Netlify / Vercel | Add SPA redirect (`_redirects` file or `404.html`)       |
+| Render / Surge   | Works with any SPA-compatible host                       |
+
+---
+
+## 🙌 Contribution
+
+💡 **Want to improve the project?**
+Feel free to fork, clone, and open a PR.
 
 ```bash
-Admin Email: admin@herald.com
-Admin Password: 1234Ab!
+git checkout -b feature/your-feature
+git commit -m "Add your feature"
+git push origin feature/your-feature
 ```
 
 ---
 
-## 🛠 **Technologies Used**  
+## 📜 License
 
-### **Frontend Framework & Libraries**  
-- **React** – Core UI development  
-- **React Router DOM** – Client-side navigation  
-- **Framer Motion** – Smooth animations  
-- **Tanstack React Query** – Efficient data fetching & caching  
-
-### **UI & Styling**  
-- **Tailwind CSS** – Utility-first CSS framework  
-- **Ant Design (Antd)** – Pre-styled UI components  
-- **Radix UI** – Accessible UI components  
-- **Lucide React** – Modern icons  
-- **Swiper** – Image & content sliders  
-
-### **State Management & Forms**  
-- **React Hook Form** – Form validation & management  
-- **Class Variance Authority (CVA)** – Dynamic component styling  
-
-### **Data Handling & APIs**  
-- **Axios** – API requests & data fetching  
-- **Date-fns** – Date formatting & manipulation  
-- **React Google Charts** – Data visualization  
-
-### **Authentication & Database**  
-- **Firebase** – Authentication, Firestore, and Cloud Storage  
-
-### **Payment Integration**  
-- **Stripe** – Secure payment processing for subscriptions  
-
-### **Animations & Effects**  
-- **Lottie React** – Animated vector graphics  
-- **Canvas Confetti** – Celebration effects  
-- **Typewriter Effect** – Typing animation for UI elements  
-
-### **Development & Tooling**  
-- **Vite** – Fast development server and build tool  
-- **ESLint** – Code linting for quality assurance  
-- **PostCSS & Autoprefixer** – CSS optimization  
-- **Node.js & TypeScript Definitions** – Enhances development experience  
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🚀 **Run the Project Locally**  
+## 📧 Contact
 
-### **Prerequisites**  
-Ensure you have the following installed:  
-- **Node.js** (LTS version recommended)  
-- **npm** (comes with Node.js) or **yarn**  
-- **Git** (optional but recommended)  
-
-### **1️⃣ Clone the Repository**  
-```sh
-git clone <repository-url>
-cd client
-```
-
-### **2️⃣ Install Dependencies**  
-```sh
-npm install  
-# or  
-yarn install  
-```
-
-### **3️⃣ Create a `.env` File**  
-Inside the project root, create a `.env` file and add:  
-
-```env
-VITE_apiKey=
-VITE_authDomain=
-VITE_projectId=
-VITE_storageBucket=
-VITE_messagingSenderId=
-VITE_appId=
-VITE_IMGBB_API_KEY=
-VITE_STRIPE_PK=
-```
-> ⚠️ **Discalmer** add your keys here.  
-
-### **4️⃣ Start the Development Server**  
-```sh
-npm run dev  
-# or  
-yarn dev  
-```
-The Vite development server will start, and the application will be available locally.  
-
-### **5️⃣ Build the Project (Optional)**  
-For production-ready code, run:  
-```sh
-npm run build  
-# or  
-yarn build  
-```
-
-### **6️⃣ Preview the Build (Optional)**  
-To preview the production build locally:  
-```sh
-npm run preview  
-# or  
-yarn preview  
-```
+* 👨‍💻 **Developer**: Sadik Sami
+* ✉️ **Email**: [sadik.al.sami.2002@gmail.com](mailto:sadik.al.sami.2002@gmail.com)
+* 🌐 **Live Site**: [https://knowledge-herald.web.app](https://knowledge-herald.web.app/)
+* 🌍 **LinkedIn**: [linkedin.com/in/sadiksami](https://www.linkedin.com/in/sadik-al-sami-b65311204/)
+* 🧰 **Portfolio**: [sadiksami.dev](https://sadik-dev.vercel.app/)
 
 ---
 
-## 👨‍💻 **Contributing**  
+## 🙏 Acknowledgements
 
-Contributions are welcome! If you want to enhance **Knowledge Herald**, follow these steps:  
-1. **Fork the repository**  
-2. **Create a new branch** (`feature/your-feature`)  
-3. **Commit your changes** (`git commit -m "Add feature"`)  
-4. **Push to the branch** (`git push origin feature/your-feature`)  
-5. **Submit a pull request**  
+* Inspired by platforms like **Medium**, **TechCrunch**, and **The Verge**
+* Special thanks to open-source contributors
 
----
-
-## 📜 **License**  
-
-This project is licensed under the **MIT License**.  
-
----
-
-### 🎉 **Now You're Ready to Explore Knowledge Herald! 🚀**  
+```
