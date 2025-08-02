@@ -222,6 +222,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## 🙏 Acknowledgements
 
 * Inspired by platforms like **Medium**, **TechCrunch**, and **The Verge**
-* Special thanks to open-source contributors
-
-```
