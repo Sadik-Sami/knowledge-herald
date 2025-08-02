@@ -127,14 +127,16 @@ src/
 ## 🔧 Setup & Installation
 
 1. **Clone the project**
-   ```bash
+   
+   ```
    git clone https://github.com/yourusername/knowledge-herald-frontend.git
    cd knowledge-herald-frontend
-````
+   ```
+
 
 2. **Install dependencies**
 
-   ```bash
+   ```
    npm install
    ```
 
@@ -145,14 +147,14 @@ src/
 
 4. **Create `.env` file**
 
-   ```env
+   ```
    VITE_API_BASE_URL=https://your-backend-api.com
    VITE_FIREBASE_API_KEY=your_firebase_api_key
    ```
 
 5. **Run the app**
 
-   ```bash
+   ```
    npm run dev
    ```
 
@@ -193,7 +195,7 @@ This project supports multiple hosting platforms:
 💡 **Want to improve the project?**
 Feel free to fork, clone, and open a PR.
 
-```bash
+```
 git checkout -b feature/your-feature
 git commit -m "Add your feature"
 git push origin feature/your-feature
